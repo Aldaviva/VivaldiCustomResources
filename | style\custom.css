@@ -1,0 +1,26 @@
+/* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
+.addressfield .add-bookmark-container.addressfield-popup-container,
+.addressfield .reader-mode.button-addressfield,
+.addressfield .input-dropdown.button-addressfield {
+	display: none;
+}
+
+/* Hide reload button, home button, and extensions overflow menu next to the address bar */
+.toolbar-addressbar .button-toolbar.toggle-extensions-group,
+.toolbar-addressbar .button-toolbar.reload,
+.toolbar-addressbar .button-toolbar.home {
+	display: none;
+}
+
+/* Hide new tab button */
+.button-tabbar.newtab {
+	display: none;
+}
+
+/* Hide Vivaldi menu button */
+#titlebar .vivaldi {
+	display: none;
+}
+.win #tabs-container.top {
+	padding-left: 0;
+}
