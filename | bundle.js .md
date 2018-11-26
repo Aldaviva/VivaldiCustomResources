@@ -3,7 +3,7 @@ This file is large and minified, have fun.
 ## `TabStrip.jsx`
 
 ### Constants at the top of the module
-Make tabs as wide as possible.
+[Make tabs as wide as possible.](https://gist.github.com/Aldaviva/39e4472ab7a5ee50473de74df826d928)
 
 ```diff
 +L=2000,
