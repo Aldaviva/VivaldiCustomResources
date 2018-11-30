@@ -24,3 +24,16 @@
 .win #tabs-container.top {
 	padding-left: 0;
 }
+
+/* Hide Extended Validation certificate organization name */
+.addressfield .addressfield-siteinfo.certified .siteinfo-text {
+	display: none;
+}
+.addressfield .addressfield-siteinfo .siteinfo-symbol {
+	/* Hide 1px right border on green square, both in EV and non-EV mode */
+	margin-right: -1px;
+}
+.addressfield .addressfield-siteinfo.certified .siteinfo-symbol {
+	border-top-right-radius: var(--radiusRoundedLess);
+	border-bottom-right-radius: var(--radiusRoundedLess);
+}
