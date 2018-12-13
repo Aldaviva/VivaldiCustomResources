@@ -6,8 +6,8 @@ This file is large and minified, have fun.
 [Make tabs as wide as possible.](https://gist.github.com/Aldaviva/39e4472ab7a5ee50473de74df826d928)
 
 ```diff
-+L=2000,
--L=180,
++U=2000,
+-U=180,
 ```
 
 ### In method `getStyles(e)`

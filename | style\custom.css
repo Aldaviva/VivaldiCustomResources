@@ -5,10 +5,8 @@
 	display: none;
 }
 
-/* Hide reload button, home button, and extensions overflow menu next to the address bar */
-.toolbar-addressbar .button-toolbar.toggle-extensions-group,
-.toolbar-addressbar .button-toolbar.reload,
-.toolbar-addressbar .button-toolbar.home {
+/* Hide extensions overflow menu next to the address bar */
+.toolbar-addressbar .button-toolbar.toggle-extensions-group {
 	display: none;
 }
 
