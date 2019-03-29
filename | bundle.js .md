@@ -9,12 +9,4 @@ This file is large and minified, have fun.
 -U=180,
 +U=2000,
 ```
-
-### In method `getStyles(e)`
-Remove empty space to the right of tabs, since we removed the New Tab button.
-
-*Ensure `Active Tab Minimum Width` is set as low as possible (30px) in Settings, otherwise the tab widths get screwy at small window sizes. This is a problem even in an unmodified installation.*
-```diff
--const t=this.createFlexBoxLayout(this.props.tabs,this.props.direction,this.props.maxWidth,this.props.maxHeight
-+const t=this.createFlexBoxLayout(this.props.tabs,this.props.direction,this.props.maxWidth+60,this.props.maxHeight
-```
+The variable name can change across Vivaldi releases, since the file is minified. Just look for the constant near `TabStrip.jsx` whose value is `180`.

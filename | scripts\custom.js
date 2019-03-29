@@ -1,9 +1,16 @@
+/*
+ * This file adds a custom keyboard shortcut.
+ *  -  Ctrl+Shift+C: Copy current page location to clipboard
+ *     There are Chromium extensions that do this, but Vivaldi's extension keyboard shortcut handling is not working properly in 2.3.
+ *
+ * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
+ */
+
 /**
 * Keyboard Machine, a Mod for Vivaldi
 * Make custom shortcuts that do stuff™ and use them in the vivaldi UI
 * Based on "button machine". NO COPYRIGHT RESERVED. lonm.vivaldi.net
 * Version 1.0.0
-* https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
 */
 
 (function keyboardMachine(){

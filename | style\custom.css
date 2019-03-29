@@ -1,18 +1,21 @@
 /* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-.addressfield .add-bookmark-container.addressfield-popup-container,
-.addressfield .reader-mode.button-addressfield,
-.addressfield .input-dropdown.button-addressfield {
+/* TODO broken */
+.addressfield > .toolbar-insideinput {
 	display: none;
 }
 
 /* Hide extensions overflow menu next to the address bar */
-.toolbar-addressbar .button-toolbar.toggle-extensions-group {
+.toolbar-addressbar .toolbar-extensions {
 	display: none;
 }
 
 /* Hide new tab button */
-.button-tabbar.newtab {
+.button-toolbar.newtab {
 	display: none;
+}
+/* Make tabs fill in remaining empty space */
+#tabs-container > .resize {
+	margin-right: -60px;
 }
 
 /* Hide Vivaldi menu button */
