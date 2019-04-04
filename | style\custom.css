@@ -1,5 +1,4 @@
 /* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-/* TODO broken */
 .addressfield > .toolbar-insideinput {
 	display: none;
 }
@@ -37,4 +36,22 @@
 .addressfield .addressfield-siteinfo.certified .siteinfo-symbol {
 	border-top-right-radius: var(--radiusRoundedLess);
 	border-bottom-right-radius: var(--radiusRoundedLess);
+}
+
+/* Hide unsecure HTTP icon and warning in address bar */
+.addressfield .addressfield-siteinfo.warning,
+.addressfield .addressfield-siteinfo.web,
+.addressfield .addressfield-siteinfo.internal {
+    display: none;
+}
+
+/* Fix URL text in address bar being too low by 1px, should be vertically centered */
+.addressfield > form input.url {
+    line-height: 22px;
+}
+
+/* Hide focus border on address field */
+.addressfield:focus-within {
+    border-color: transparent;
+    box-shadow: none;
 }
