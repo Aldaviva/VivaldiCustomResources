@@ -9,4 +9,4 @@ This file is large and minified, have fun.
 -U=180,
 +U=2000,
 ```
-The variable name can change across Vivaldi releases, since the file is minified. Just look for the constant near `TabStrip.jsx` whose value is `180`.
+The variable name can change across Vivaldi releases, since the file is minified. Look for the constant near `TabStrip.jsx` whose value is `180`.
