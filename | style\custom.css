@@ -1,6 +1,11 @@
 /* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-.addressfield > .toolbar-insideinput {
+.addressfield > .toolbar .button-toolbar,
+.addressfield > .toolbar .toolbar {
 	display: none;
+}
+.addressfield .pageload .pageload-ticker:last-child {
+	margin-right: 0;
+	border-right: none;
 }
 
 /* Hide extensions overflow menu next to the address bar */
