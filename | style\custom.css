@@ -47,16 +47,21 @@
 .addressfield .addressfield-siteinfo.warning,
 .addressfield .addressfield-siteinfo.web,
 .addressfield .addressfield-siteinfo.internal {
-    display: none;
+	display: none;
 }
 
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
 .addressfield > form input.url {
-    line-height: 22px;
+	line-height: 22px;
 }
 
 /* Hide focus border on address field */
 .addressfield:focus-within {
-    border-color: transparent;
-    box-shadow: none;
+	border-color: transparent;
+	box-shadow: none;
+}
+
+/* Hide synced tabs and closed tabs buttons */
+.sync-and-trash-container {
+	display: none;
 }
