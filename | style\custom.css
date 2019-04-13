@@ -18,8 +18,11 @@
 	display: none;
 }
 /* Make tabs fill in remaining empty space */
-#tabs-container > .resize {
-	margin-right: -60px;
+#tabs-container.top > .resize {
+	margin-right: 5px;
+}
+.win.maximized #tabs-container.top > .resize {
+	margin-right: 2px;
 }
 
 /* Hide Vivaldi menu button */
@@ -64,4 +67,9 @@
 /* Hide synced tabs and closed tabs buttons */
 .sync-and-trash-container {
 	display: none;
+}
+
+/* Remove extra space above tabs when window is not maximized */
+.win.normal #tabs-container.top {
+	padding-top: 0;
 }
