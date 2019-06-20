@@ -34,23 +34,25 @@
 }
 
 /* Hide Extended Validation certificate organization name */
-.addressfield .addressfield-siteinfo.certified .siteinfo-text {
+.addressfield .SiteInfoButton.certified .siteinfo-text {
 	display: none;
 }
-.addressfield .addressfield-siteinfo .siteinfo-symbol {
-	/* Hide 1px right border on green square, both in EV and non-EV mode */
-	margin-right: -1px;
-}
-.addressfield .addressfield-siteinfo.certified .siteinfo-symbol {
-	border-top-right-radius: var(--radiusRoundedLess);
-	border-bottom-right-radius: var(--radiusRoundedLess);
+#browser:not(.private) .SiteInfoButton,
+#browser:not(.private) .SiteInfoButton-SecurityBadge {
+	border-top-left-radius: var(--radiusRoundedLess);
+	border-bottom-left-radius: var(--radiusRoundedLess);
 }
 
 /* Hide unsecure HTTP icon and warning in address bar */
-.addressfield .addressfield-siteinfo.warning,
-.addressfield .addressfield-siteinfo.web,
-.addressfield .addressfield-siteinfo.internal {
+.addressfield .SiteInfoButton.warning,
+.addressfield .SiteInfoButton.web,
+.addressfield .SiteInfoButton.internal {
 	display: none;
+}
+
+/* Reduce rounded corners of progress bar peeking through */
+.addressfield .pageload .pageload-indicator::-webkit-progress-value {
+	border-radius: 0 !important;
 }
 
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
