@@ -9,11 +9,12 @@
 }
 
 /* Hide extensions overflow menu next to the address bar.
- * You can show and hide extension buttons using Settings > Address Bar > Extensions Toggle.
- *  - When checked, all extension buttons will be hidden.
- *  - When unchecked, any extension buttons that have been marked as Show Button (from the button context menu) will be visible.
+ * You can show and hide extension buttons using Settings > Address Bar > Extension Visibility.
+ *  - When set to "Toggle Only Hidden Extensions", any extension buttons that have been marked as Show Button (from the button context menu) will be visible.
+ *  - When set to "Toggle All Extensions", all extension buttons will be hidden.
  */
-.toolbar-addressbar .toolbar-extensions .button-narrow {
+.toolbar-extensions .extensionPopupIcons,
+.toolbar-extensions .button-toolbar[class="button-toolbar"] {
 	display: none;
 }
 
@@ -60,8 +61,8 @@
 }
 
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
-.addressfield > form input.url {
-	line-height: 22px;
+.UrlBar-UrlField {
+	padding-top: 5px;
 }
 
 /* Hide focus border on address field */
@@ -78,9 +79,4 @@
 /* Remove extra space above tabs when window is not maximized */
 .win.normal #tabs-container.top {
 	padding-top: 0;
-}
-
-/* Make 1px underline of toolbar not overlap with address bar dropdown */
-.toolbar-mainbar:after {
-	z-index: 0 !important;
 }
