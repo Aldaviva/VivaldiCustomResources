@@ -35,6 +35,12 @@
                 addressField.blur();
             }
         },
+        /**
+         * Toggle whether extension overflow button toggles all extensions, or only the hidden extensions.
+         * Yes, it's a toggle for a toggle.
+         * With the custom CSS file (https://gist.github.com/Aldaviva/9fbe321331b7f80786a371e0fd4bcfaf#file-style-custom-css) installed,
+         * this will completely show and hide extensions with a keyboard shortcut, without leaving behind the toggle button or any other extension UI when they are all hidden.
+         */
         "Ctrl+E": () => {
             const prefs = vivaldi.prefs;
             const showHiddenToggle = "vivaldi.address_bar.extensions.show_hidden_toggle";
