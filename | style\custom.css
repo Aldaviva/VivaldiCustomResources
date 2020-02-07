@@ -9,7 +9,7 @@
 }
 
 /* Hide extensions overflow menu next to the address bar.
- * You can show and hide extension buttons using Settings > Address Bar > Extension Visibility.
+ * You can show and hide extension buttons using Ctrl+E or Settings > Address Bar > Extension Visibility.
  *  - When set to "Toggle Only Hidden Extensions", any extension buttons that have been marked as Show Button (from the button context menu) will be visible.
  *  - When set to "Toggle All Extensions", all extension buttons will be hidden.
  */
