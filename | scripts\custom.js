@@ -1,7 +1,8 @@
 /*
- * This file adds a custom keyboard shortcut.
+ * This file adds custom keyboard shortcuts.
  *  -  Ctrl+Shift+C: Copy current page location to clipboard
  *     There are Chromium extensions that do this, but Vivaldi's extension keyboard shortcut handling is not working properly in 2.3.
+ *  -  Ctrl+E: Toggle the address bar Extension Visibility preference between "Toggle Only Hidden Extensions" and "Toggle All Extensions"
  *
  * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
  */
@@ -33,6 +34,16 @@
             } else {
                 addressField.blur();
             }
+        },
+        "Ctrl+E": () => {
+            const prefs = vivaldi.prefs;
+            const showHiddenToggle = "vivaldi.address_bar.extensions.show_hidden_toggle";
+            const showAllToggle = "vivaldi.address_bar.extensions.show_all_toggle";
+
+            prefs.get(showHiddenToggle, oldShowHiddenToggleValue => {
+                prefs.set({ path: showHiddenToggle, value: !oldShowHiddenToggleValue });
+                prefs.set({ path: showAllToggle, value: oldShowHiddenToggleValue });
+            });
         }
     };
 
