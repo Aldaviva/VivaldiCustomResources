@@ -1,9 +1,9 @@
 /*
- * This file adds custom keyboard shortcuts.
+ * This function adds custom keyboard shortcuts.
  *  -  Ctrl+Shift+C: Copy current page location to clipboard
  *     There are Chromium extensions that do this, but Vivaldi's extension keyboard shortcut handling is not working properly in 2.3.
  *  -  Ctrl+E: Toggle the address bar Extension Visibility preference between "Toggle Only Hidden Extensions" and "Toggle All Extensions"
- *  -  Ctrl+Shift+H: Hibernate background tabs
+ *  -  Alt+H: Hibernate background tabs
  *
  * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
  */
@@ -81,7 +81,6 @@
 		const customShortcut = SHORTCUTS[combination];
 		if(customShortcut){
 			customShortcut();
-			debugger;
 			return false;
 		}
 	}
@@ -97,4 +96,95 @@
 		}
 	}
 	initMod();
+})();
+
+(function(){
+	var mostRecentUrlSent = null;
+	var urlLastSentAt = null;
+
+	function updateActiveUrl() {
+		chrome.windows.getCurrent(currentWindow => {
+			chrome.tabs.getAllInWindow(currentWindow.id, tabsInCurrentWindow => {
+				const activeTab = tabsInCurrentWindow.find(tab => tab.active);
+				const activeTabUrl = activeTab.url;
+				const now = new Date();
+
+				if(activeTabUrl !== "" && (activeTabUrl !== mostRecentUrlSent || mostRecentUrlSent === null || now - urlLastSentAt >= 500)) {
+					mostRecentUrlSent = activeTabUrl;
+					urlLastSentAt = now;
+					sendCurrentUrlUsingXhr(activeTabUrl);
+				}
+			});
+		});
+	}
+
+	function sendCurrentUrlUsingXhr(currentUrl){
+		var request = new XMLHttpRequest();
+
+		var requestBody = new URLSearchParams();
+		requestBody.set("activeUrl", currentUrl);
+
+		request.open("POST", "http://127.0.0.1:53372/webautotype/activeurl/vivaldi");
+		request.send(requestBody);
+	}
+
+	function init(){
+		['onCreated', 'onRemoved', 'onFocusChanged'].forEach(windowEventName => {
+			chrome.windows[windowEventName].addListener(updateActiveUrl);
+		});
+
+		['onCreated', 'onUpdated', 'onActivated', 'onDetached', 'onAttached', 'onRemoved', 'onReplaced'].forEach(tabEventName => {
+			chrome.tabs[tabEventName].addListener(updateActiveUrl);
+		});
+
+		var lastFocusedWindowId = null;
+		setInterval(function(){
+			chrome.windows.getAll(windows => {
+				const focusedWindow = windows.find(window => window.focused);
+				if(!focusedWindow){
+					lastFocusedWindowId = null;
+				} else if(lastFocusedWindowId !== focusedWindow.id){
+					lastFocusedWindowId = focusedWindow.id;
+					updateActiveUrl();
+				}
+			});
+		}, 500);
+	}
+
+	init();
+
+	
+})();
+
+/**
+ * Fix 1px resizing bug when Application Desktop Toolbars are shown or hidden.
+ * For example, when showing or hiding the Winamp docked toolbar, Vivaldi windows will always reduce their own width and height by 1px
+ * each, even if no resizing was required to avoid overlapping. The top-left corner doesn't move, so the right and bottom edges both shrink.
+ * This function watches for this bug occurring and restores the previous desired window size.
+ */
+(function(){
+	var originalSize = { width: -1, height: -1 };
+
+	function getCurrentWindowSize(){
+		return { width: window.outerWidth, height: window.outerHeight };
+	}
+
+	function updateCurrentWindowSize(){
+		originalSize = getCurrentWindowSize();
+	}
+
+	window.addEventListener("resize", event => {
+		const newSize = getCurrentWindowSize();
+		console.debug("Browser window resized from "+originalSize.width+"×"+originalSize.height+"px to "+newSize.width+"×"+newSize.height+"px.");
+		if(newSize.width < originalSize.width && newSize.width >= originalSize.width - 2 
+			&& newSize.height < originalSize.height && newSize.height >= originalSize.height - 2 
+			&& originalSize.width - newSize.width === originalSize.height - newSize.height){
+			console.info("Resizing browser window to "+originalSize.width+"×"+originalSize.height+"px.");
+			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, originalSize);
+		} else {
+			updateCurrentWindowSize();
+		}
+	});
+
+	updateCurrentWindowSize();
 })();
