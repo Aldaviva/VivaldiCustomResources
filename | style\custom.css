@@ -90,3 +90,19 @@
 .ContentBlocker-Control {
 	display: none;
 }
+
+/* Get rid of Start Page background fading every single time you load it */
+.startpage {
+	transition: none;
+}
+
+/* Hide the back and forward buttons.
+ * I'm not removing them using Customize › Remove From Toolbar because I still want to trigger synthetic right-clicks on them to show their context menus using custom.js.
+ */
+.toolbar-addressbar .toolbar-droptarget [title ^= "Go to previous page"],
+.toolbar-addressbar .toolbar-droptarget [title ^= "Go to next page"] {
+	display: none;
+}
+.toolbar-addressbar {
+	height: 34px;
+}

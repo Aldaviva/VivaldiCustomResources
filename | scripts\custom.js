@@ -4,6 +4,8 @@
  *     There are Chromium extensions that do this, but Vivaldi's extension keyboard shortcut handling is not working properly in 2.3.
  *  -  Ctrl+E: Toggle the address bar Extension Visibility preference between "Toggle Only Hidden Extensions" and "Toggle All Extensions"
  *  -  Alt+H: Hibernate background tabs
+ *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
+ *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
  *
  * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
  */
@@ -69,8 +71,53 @@
 					discardableTabs.forEach(tab => chrome.tabs.discard(tab.id));
 				});
 			});
+		},
+
+		/**
+		 * Open the history menu (like right-clicking the Back button)
+		 */
+		"Alt+Z": () => {
+			openHistoryMenu("back");
+		},
+
+		/**
+		 * Open the history menu (like right-clicking the Forward button)
+		 */
+		"Alt+X": () => {
+			openHistoryMenu("forward");
 		}
 	};
+
+	function openHistoryMenu(direction) {
+		let navigationButtonTitle;
+		switch(direction){
+			case "back":
+				navigationButtonTitle = "Go to previous page";
+				break;
+			case "forward":
+				navigationButtonTitle = "Go to next page";
+				break;
+		}
+
+		/* Find the button's child span element instead of the button itself because Vivaldi
+		 * inconsistently attaches the title attribute to the button or its parent div depending
+		 * on the history state. This way, we can always find the button by accessing the span's 
+		 * parent.
+		 */
+		const navigationButtonSpanEl = document.querySelector(".toolbar-addressbar .toolbar-droptarget [title ^= '" + navigationButtonTitle + "'] span");
+
+		if(navigationButtonSpanEl){
+			const rightClickEvent = new MouseEvent("contextmenu", {
+				bubbles: true,
+				clientX: window.innerWidth/2,
+				clientY: window.innerHeight/2
+			});
+
+			navigationButtonSpanEl.parentElement.dispatchEvent(rightClickEvent);
+		} else {
+			console.error("Could not find the "+direction+" button in the navigation toolbar. This can happen if you removed it using Customize › Remove From Toolbar. In this case, you can restore it using Customize › Reset Toolbar To Default, and the button will still be hidden by custom.css.");
+		}
+	}
 
 	/**
 	 * Handle a potential keyboard shortcut
