@@ -86,6 +86,11 @@
 	padding-top: 0;
 }
 
+/* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
+#browser.win.win10.tabs-top #header #titlebar .window-buttongroup button:not(.vivaldi) {
+	height: 30px;
+}
+
 /* Hide content blocker button in URL bar */
 .ContentBlocker-Control {
 	display: none;
