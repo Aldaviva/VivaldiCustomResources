@@ -2,6 +2,7 @@
  * This function adds custom keyboard shortcuts.
  *  -  Ctrl+Shift+C: Copy current page location to clipboard
  *     There are Chromium extensions that do this, but Vivaldi's extension keyboard shortcut handling is not working properly in 2.3.
+ *  -  Ctrl+Alt+Shift+V: Paste and Go in new tab
  *  -  Ctrl+E: Toggle the address bar Extension Visibility preference between "Toggle Only Hidden Extensions" and "Toggle All Extensions"
  *  -  Alt+H: Hibernate background tabs
  *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
@@ -37,6 +38,35 @@
 			} else {
 				addressField.blur();
 			}
+		},
+
+		/**
+		 * Paste and Go in new tab
+		 */
+		"Ctrl+Shift+Alt+V": () => {
+			const oldFocus = document.activeElement;
+
+			if(oldFocus){
+				oldFocus.blur();
+			}
+
+			var onPaste = (event) => {
+				event.preventDefault();
+
+				var clipboardData = event.clipboardData.getData("text/plain");
+				if(clipboardData.length){
+					chrome.tabs.create({ url: clipboardData });
+				}
+
+				document.removeEventListener("paste", onPaste);
+
+				if(oldFocus) {
+					oldFocus.focus();
+				}
+			};
+
+			document.addEventListener("paste", onPaste);
+			document.execCommand("paste");
 		},
 
 		/**
@@ -132,17 +162,15 @@
 		}
 	}
 
-	/**
-	 * Check that the browser is loaded up properly, and init the mod
-	 */
-	function initMod(){
+	function init(){
 		if(document.querySelector("#browser")){
 			vivaldi.tabsPrivate.onKeyboardShortcut.addListener(keyCombo);
 		} else {
-			setTimeout(initMod, 200);
+			setTimeout(init, 200);
 		}
 	}
-	initMod();
+
+	init();
 })();
 
 (function(){
@@ -184,18 +212,7 @@
 			chrome.tabs[tabEventName].addListener(updateActiveUrl);
 		});
 
-		var lastFocusedWindowId = null;
-		setInterval(function(){
-			chrome.windows.getAll(windows => {
-				const focusedWindow = windows.find(window => window.focused);
-				if(!focusedWindow){
-					lastFocusedWindowId = null;
-				} else if(lastFocusedWindowId !== focusedWindow.id){
-					lastFocusedWindowId = focusedWindow.id;
-					updateActiveUrl();
-				}
-			});
-		}, 500);
+		vivaldi.windowPrivate.onActivated.addListener(updateActiveUrl);
 	}
 
 	init();
