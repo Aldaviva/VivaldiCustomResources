@@ -50,6 +50,7 @@
 				oldFocus.blur();
 			}
 
+			// Very clever, thanks to https://github.com/justdanpo/VivaldiHooks/blob/master/vivaldi/hooks/newtab-middleclick-pasteandgo.js
 			var onPaste = (event) => {
 				event.preventDefault();
 
@@ -216,39 +217,5 @@
 	}
 
 	init();
-
 	
-})();
-
-/**
- * Fix 1px resizing bug when Application Desktop Toolbars are shown or hidden.
- * For example, when showing or hiding the Winamp docked toolbar, Vivaldi windows will always reduce their own width and height by 1px
- * each, even if no resizing was required to avoid overlapping. The top-left corner doesn't move, so the right and bottom edges both shrink.
- * This function watches for this bug occurring and restores the previous desired window size.
- */
-(function(){
-	var originalSize = { width: -1, height: -1 };
-
-	function getCurrentWindowSize(){
-		return { width: window.outerWidth, height: window.outerHeight };
-	}
-
-	function updateCurrentWindowSize(){
-		originalSize = getCurrentWindowSize();
-	}
-
-	window.addEventListener("resize", event => {
-		const newSize = getCurrentWindowSize();
-		console.debug("Browser window resized from "+originalSize.width+"×"+originalSize.height+"px to "+newSize.width+"×"+newSize.height+"px.");
-		if(newSize.width < originalSize.width && newSize.width >= originalSize.width - 2 
-			&& newSize.height < originalSize.height && newSize.height >= originalSize.height - 2 
-			&& originalSize.width - newSize.width === originalSize.height - newSize.height){
-			console.info("Resizing browser window to "+originalSize.width+"×"+originalSize.height+"px.");
-			chrome.windows.update(chrome.windows.WINDOW_ID_CURRENT, originalSize);
-		} else {
-			updateCurrentWindowSize();
-		}
-	});
-
-	updateCurrentWindowSize();
 })();
