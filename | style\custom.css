@@ -77,9 +77,9 @@
 }
 
 /* Hide synced tabs and closed tabs buttons */
-.sync-and-trash-container {
+/*.sync-and-trash-container {
 	display: none;
-}
+}*/
 
 /* Remove extra space above tabs when window is not maximized */
 .win.normal #tabs-container.top {
