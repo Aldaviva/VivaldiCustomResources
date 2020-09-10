@@ -1,9 +1,8 @@
 /* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-.addressfield > .toolbar .button-toolbar,
-.addressfield > .toolbar .toolbar {
+.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar {
 	display: none;
 }
-.addressfield .pageload .pageload-ticker:last-child {
+.UrlBar-AddressField .pageload .pageload-ticker:last-child {
 	margin-right: 0;
 	border-right: none;
 }
@@ -39,7 +38,7 @@
 }
 
 /* Hide Extended Validation certificate organization name */
-.addressfield .SiteInfoButton.certified .siteinfo-text {
+.UrlBar-AddressField .SiteInfoButton.certified .siteinfo-text {
 	display: none;
 }
 #browser:not(.private) .SiteInfoButton,
@@ -49,29 +48,35 @@
 }
 
 /* Hide unsecure HTTP icon and warning in address bar */
-.addressfield .SiteInfoButton.warning,
-.addressfield .SiteInfoButton.web,
-.addressfield .SiteInfoButton.internal {
+.UrlBar-AddressField .SiteInfoButton.warning,
+.UrlBar-AddressField .SiteInfoButton.web,
+.UrlBar-AddressField .SiteInfoButton.internal {
 	display: none;
 }
 
 /* Make the Extended Validation lock icon be the same color as the normal one */
-.addressfield .SiteInfoButton.certified {
+.UrlBar-AddressField .SiteInfoButton.certified {
 	fill: var(--colorFgFadedMore);
 }
 
 /* Reduce rounded corners of progress bar peeking through */
-.addressfield .pageload .pageload-indicator::-webkit-progress-value {
+.UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value {
 	border-radius: 0 !important;
 }
 
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
-.UrlBar-UrlField {
+.UrlBar-UrlField,
+.UrlFragment-Wrapper {
 	padding-top: 5px !important;
 }
 
+/* Make all text in the URL white, not just the first- and second-level domain */
+.UrlFragment-Wrapper--ShouldHighlight {
+	--LowlightColor: var(--HighlightColor);
+}
+
 /* Hide focus border on address field */
-.addressfield:focus-within {
+.UrlBar-AddressField:focus-within {
 	border-color: transparent;
 	box-shadow: none;
 }
@@ -101,13 +106,14 @@
 	transition: none;
 }
 
-/* Hide the back and forward buttons.
+/* 
+ * Hide the back and forward buttons.
  * I'm not removing them using Customize › Remove From Toolbar because I still want to trigger synthetic right-clicks on them to show their context menus using custom.js.
  */
-.toolbar-addressbar .toolbar-droptarget [title ^= "Go to previous page"],
-.toolbar-addressbar .toolbar-droptarget [title ^= "Go to next page"] {
+.UrlBar .toolbar-droptarget [title ^= "Go to previous page"],
+.UrlBar .toolbar-droptarget [title ^= "Go to next page"] {
 	display: none;
 }
-.toolbar-addressbar {
+.UrlBar {
 	height: 34px;
 }
