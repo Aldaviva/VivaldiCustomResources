@@ -173,3 +173,21 @@
 
 	init();
 })();
+
+/**
+ * Inform WebAutoType extension (https://github.com/Aldaviva/WebAutoTypeVivaldiExtension) when a Vivaldi window is activated, so that it can send the active URL to KeePass.
+ * Otherwise, switching foreground windows will not update the active URL.
+ * This fixes the annoyance where you launch KeePass after navigating to a login page and it doesn't get the active URL.
+ */
+(function(){
+	const webAutoTypeExtensionId = "bpikannkbkpbglmojcajbepbemdlpdhc";
+	const message = {
+		windowActivated: true
+	};
+
+	vivaldi.windowPrivate.onActivated.addListener(function(windowId, isWindowActive){
+		if(isWindowActive){
+			chrome.runtime.sendMessage(webAutoTypeExtensionId, message);
+		}
+	});
+})();
