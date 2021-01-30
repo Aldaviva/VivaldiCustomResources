@@ -96,11 +96,9 @@
 		 * Alternatively, you can rebind the shortcut below to a different key sequence, like Ctrl+Shift+H.
 		 */
 		"Alt+H": () => {
-			chrome.windows.getCurrent(currentWindow => {
-				chrome.tabs.getAllInWindow(currentWindow.id, tabsInCurrentWindow => {
-					const discardableTabs = tabsInCurrentWindow.filter(tab => !tab.active && !tab.discarded);
-					discardableTabs.forEach(tab => chrome.tabs.discard(tab.id));
-				});
+			chrome.tabs.query({ currentWindow: true }, tabsInCurrentWindow => {
+				const discardableTabs = tabsInCurrentWindow.filter(tab => !tab.active && !tab.discarded);
+				discardableTabs.forEach(tab => chrome.tabs.discard(tab.id));
 			});
 		},
 

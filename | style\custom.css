@@ -33,7 +33,7 @@
 #titlebar .vivaldi {
 	display: none;
 }
-.win #tabs-container.top {
+.win #tabs-container:not(.none).top {
 	padding-left: 0;
 }
 
@@ -82,13 +82,23 @@
 }*/
 
 /* Remove extra space above tabs when window is not maximized */
-.win.normal #tabs-container.top {
+.win10.normal #tabs-tabbar-container.top {
 	padding-top: 0;
+	max-height: 26px;
 }
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
 #browser.win.win10.tabs-top #header #titlebar .window-buttongroup button:not(.vivaldi) {
-	height: 30px;
+	height: 26px;
+}
+.tab-position .tab .tab-header {
+	flex-basis: 26px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+.toolbar-tabbar > .button-toolbar > button {
+	height: 26px;
+	min-height: auto;
 }
 
 /* Hide content blocker button in URL bar */
