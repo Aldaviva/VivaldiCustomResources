@@ -20,11 +20,9 @@
 
 (function keyboardMachine(){
 	/**
-	* Add custom commands here
-	* key: String of what keys to press - written in the form "Ctrl+Shift+Alt+Key"
-	* value: A function describing what to do when the key is pressed
-	*/
-	const SHORTCUTS = {
+	 * key: String of what keys to press - written in the form "Ctrl+Shift+Alt+Key"
+	 */
+	const SHORTCUT_HANDLERS = {
 		/**
 		 * Copy current page URL to clipboard
 		 */
@@ -33,6 +31,7 @@
 			const addressField = document.querySelector("input.url.vivaldi-addressfield");
 			addressField.select();
 			document.execCommand("copy");
+
 			if(oldFocus) {
 				oldFocus.focus();
 			} else {
@@ -51,10 +50,10 @@
 			}
 
 			// Very clever, thanks to https://github.com/justdanpo/VivaldiHooks/blob/master/vivaldi/hooks/newtab-middleclick-pasteandgo.js
-			var onPaste = (event) => {
+			const onPaste = (event) => {
 				event.preventDefault();
 
-				var clipboardData = event.clipboardData.getData("text/plain");
+				const clipboardData = event.clipboardData.getData("text/plain");
 				if(clipboardData.length){
 					chrome.tabs.create({ url: clipboardData });
 				}
@@ -105,16 +104,12 @@
 		/**
 		 * Open the history menu (like right-clicking the Back button)
 		 */
-		"Alt+Z": () => {
-			openHistoryMenu("back");
-		},
+		"Alt+Z": () => openHistoryMenu("back"),
 
 		/**
 		 * Open the history menu (like right-clicking the Forward button)
 		 */
-		"Alt+X": () => {
-			openHistoryMenu("forward");
-		}
+		"Alt+X": () => openHistoryMenu("forward")
 	};
 
 	function openHistoryMenu(direction) {
@@ -148,28 +143,23 @@
 		}
 	}
 
-	/**
-	 * Handle a potential keyboard shortcut
-	 * @param {String} combination written in the form (Ctrl+Shift+Alt+KEY)
-	 * @param {boolean} extras I don't know what this does, but it's an extra argument whose value seems to be `false`
-	 */
-	function keyCombo(combination, extras){
-		const customShortcut = SHORTCUTS[combination];
-		if(customShortcut){
-			customShortcut();
+	vivaldi.tabsPrivate.onKeyboardShortcut.addListener(shortcut => {
+		const shortcutHandler = SHORTCUT_HANDLERS[shortcut];
+		if(shortcutHandler){
+			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
+			const chromeCurrentWindowIdPromise = new Promise(resolve => chrome.windows.getCurrent(currentWindow => resolve(currentWindow.id)));
+			const vivaldiCurrentWindowIdPromise = new Promise(resolve => vivaldi.windowPrivate.getCurrentId(resolve));
+
+			Promise.all([chromeCurrentWindowIdPromise, vivaldiCurrentWindowIdPromise])
+				.then(([chromeCurrentWindowId, vivaldiCurrentWindowId]) => {
+					if(chromeCurrentWindowId === vivaldiCurrentWindowId){
+						shortcutHandler();
+					}
+				});
+
 			return false;
 		}
-	}
-
-	function init(){
-		if(document.querySelector("#browser")){
-			vivaldi.tabsPrivate.onKeyboardShortcut.addListener(keyCombo);
-		} else {
-			setTimeout(init, 200);
-		}
-	}
-
-	init();
+	});
 })();
 
 /**
@@ -179,11 +169,9 @@
  */
 (function(){
 	const webAutoTypeExtensionId = "bpikannkbkpbglmojcajbepbemdlpdhc";
-	const message = {
-		windowActivated: true
-	};
+	const message = { windowActivated: true };
 
-	vivaldi.windowPrivate.onActivated.addListener(function(windowId, isWindowActive){
+	vivaldi.windowPrivate.onActivated.addListener((windowId, isWindowActive) => {
 		if(isWindowActive){
 			chrome.runtime.sendMessage(webAutoTypeExtensionId, message);
 		}
