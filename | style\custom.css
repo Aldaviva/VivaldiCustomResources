@@ -1,5 +1,6 @@
 /* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar {
+.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar,
+.UrlBar-AddressField .BookmarkButton {
 	display: none;
 }
 .UrlBar-AddressField .pageload .pageload-ticker:last-child {
