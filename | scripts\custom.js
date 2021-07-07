@@ -9,6 +9,7 @@
  *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
  *
  * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
+ * Vivaldi developer tools: vivaldi.exe --debug-packed-apps
  */
 
 /**
@@ -23,94 +24,85 @@
 	 * key: String of what keys to press - written in the form "Ctrl+Shift+Alt+Key"
 	 */
 	const SHORTCUT_HANDLERS = {
-		/**
-		 * Copy current page URL to clipboard
-		 */
-		"Ctrl+Shift+C": () => {
-			const oldFocus = document.activeElement;
-			const addressField = document.querySelector("input.url.vivaldi-addressfield");
-			addressField.select();
-			document.execCommand("copy");
+		"Ctrl+Shift+C": copyCurrentPageUrl,
+		"Ctrl+Shift+Alt+V": pasteAndGoInNewTab,
+		"Ctrl+E": toggleExtensionToolbarButtons,
+		"Alt+H": hibernateBackgroundTabs,
+		"Alt+Z": () => openHistoryMenu("back"),
+		"Alt+X": () => openHistoryMenu("forward")
+	};
+
+	function copyCurrentPageUrl() {
+		const oldFocus = document.activeElement;
+		const addressField = document.querySelector("input.url.vivaldi-addressfield");
+		addressField.select();
+		document.execCommand("copy");
+
+		if(oldFocus) {
+			oldFocus.focus();
+		} else {
+			addressField.blur();
+		}
+	}
+
+	function pasteAndGoInNewTab() {
+		const oldFocus = document.activeElement;
+
+		if(oldFocus){
+			oldFocus.blur();
+		}
+
+		// Very clever, thanks to https://github.com/justdanpo/VivaldiHooks/blob/master/vivaldi/hooks/newtab-middleclick-pasteandgo.js
+		function onPaste(event){
+			event.preventDefault();
+
+			const clipboardData = event.clipboardData.getData("text/plain");
+			if(clipboardData.length){
+				chrome.tabs.create({ url: clipboardData });
+			}
+
+			document.removeEventListener("paste", onPaste);
 
 			if(oldFocus) {
 				oldFocus.focus();
-			} else {
-				addressField.blur();
 			}
-		},
+		}
 
-		/**
-		 * Paste and Go in new tab
-		 */
-		"Ctrl+Shift+Alt+V": () => {
-			const oldFocus = document.activeElement;
+		document.addEventListener("paste", onPaste);
+		document.execCommand("paste");
+	}
 
-			if(oldFocus){
-				oldFocus.blur();
-			}
+	/**
+	 * Toggle whether extension overflow button toggles all extensions, or only the hidden extensions.
+	 * Yes, it's a toggle for a toggle.
+	 * With the custom CSS file (https://gist.github.com/Aldaviva/9fbe321331b7f80786a371e0fd4bcfaf#file-style-custom-css) installed,
+	 * this will completely show and hide extensions with a keyboard shortcut, without leaving behind the toggle button or any other extension UI when they are all hidden.
+	 */
+	function toggleExtensionToolbarButtons(){
+		const prefs = vivaldi.prefs;
+		const showHiddenToggle = "vivaldi.address_bar.extensions.show_hidden_toggle";
+		const showAllToggle = "vivaldi.address_bar.extensions.show_all_toggle";
 
-			// Very clever, thanks to https://github.com/justdanpo/VivaldiHooks/blob/master/vivaldi/hooks/newtab-middleclick-pasteandgo.js
-			const onPaste = (event) => {
-				event.preventDefault();
+		prefs.get(showHiddenToggle, oldShowHiddenToggleValue => {
+			prefs.set({ path: showHiddenToggle, value: !oldShowHiddenToggleValue });
+			prefs.set({ path: showAllToggle, value: oldShowHiddenToggleValue });
+		});
+	}
 
-				const clipboardData = event.clipboardData.getData("text/plain");
-				if(clipboardData.length){
-					chrome.tabs.create({ url: clipboardData });
-				}
-
-				document.removeEventListener("paste", onPaste);
-
-				if(oldFocus) {
-					oldFocus.focus();
-				}
-			};
-
-			document.addEventListener("paste", onPaste);
-			document.execCommand("paste");
-		},
-
-		/**
-		 * Toggle whether extension overflow button toggles all extensions, or only the hidden extensions.
-		 * Yes, it's a toggle for a toggle.
-		 * With the custom CSS file (https://gist.github.com/Aldaviva/9fbe321331b7f80786a371e0fd4bcfaf#file-style-custom-css) installed,
-		 * this will completely show and hide extensions with a keyboard shortcut, without leaving behind the toggle button or any other extension UI when they are all hidden.
-		 */
-		"Ctrl+E": () => {
-			const prefs = vivaldi.prefs;
-			const showHiddenToggle = "vivaldi.address_bar.extensions.show_hidden_toggle";
-			const showAllToggle = "vivaldi.address_bar.extensions.show_all_toggle";
-
-			prefs.get(showHiddenToggle, oldShowHiddenToggleValue => {
-				prefs.set({ path: showHiddenToggle, value: !oldShowHiddenToggleValue });
-				prefs.set({ path: showAllToggle, value: oldShowHiddenToggleValue });
-			});
-		},
-
-		/**
-		 * Hibernate background tabs in the current window.
-		 * Note that, by default, Alt+H will open the Vivaldi Help menu.
-		 * You can disable this by disabling the "Alt Key for Main Menu" setting in Settings → Keyboard → Keyboard Shortcuts.
-		 * This will also prevent you from opening the Vivaldi menu using by pressing the Alt key.
-		 * You can still open the Vivaldi menu by pressing F10, or add a new key binding to Focus Main Menu in Settings → Keyboard → View.
-		 * Alternatively, you can rebind the shortcut below to a different key sequence, like Ctrl+Shift+H.
-		 */
-		"Alt+H": () => {
-			chrome.tabs.query({ currentWindow: true }, tabsInCurrentWindow => {
-				const discardableTabs = tabsInCurrentWindow.filter(tab => !tab.active && !tab.discarded);
-				discardableTabs.forEach(tab => chrome.tabs.discard(tab.id));
-			});
-		},
-
-		/**
-		 * Open the history menu (like right-clicking the Back button)
-		 */
-		"Alt+Z": () => openHistoryMenu("back"),
-
-		/**
-		 * Open the history menu (like right-clicking the Forward button)
-		 */
-		"Alt+X": () => openHistoryMenu("forward")
-	};
+	/**
+	 * Hibernate background tabs in the current window.
+	 * Note that, by default, Alt+H will open the Vivaldi Help menu.
+	 * You can disable this by disabling the "Alt Key for Main Menu" setting in Settings → Keyboard → Keyboard Shortcuts.
+	 * This will also prevent you from opening the Vivaldi menu using by pressing the Alt key.
+	 * You can still open the Vivaldi menu by pressing F10, or add a new key binding to Focus Main Menu in Settings → Keyboard → View.
+	 * Alternatively, you can rebind the shortcut below to a different key sequence, like Ctrl+Shift+H.
+	 */
+	function hibernateBackgroundTabs() {
+		chrome.tabs.query({ currentWindow: true }, tabsInCurrentWindow => {
+			const discardableTabs = tabsInCurrentWindow.filter(tab => !tab.active && !tab.discarded && !tab.pinned);
+			discardableTabs.forEach(tab => chrome.tabs.discard(tab.id));
+		});
+	}
 
 	function openHistoryMenu(direction) {
 		let navigationButtonTitle;
