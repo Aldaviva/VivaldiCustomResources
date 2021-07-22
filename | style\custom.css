@@ -1,5 +1,5 @@
-/* Hide the bookmark button, reader mode button, and address dropdown button in the address bar */
-.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar,
+/* Hide the bookmark button, reader mode button, mixed content warning, blocked content warning, and address dropdown button in the address bar */
+.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar:not(.create-qr-code),
 .UrlBar-AddressField .BookmarkButton {
 	display: none;
 }
