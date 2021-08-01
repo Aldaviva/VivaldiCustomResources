@@ -68,7 +68,8 @@
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
 .UrlBar-UrlField,
 .UrlFragment-Wrapper {
-	padding-top: 5px !important;
+	 /*padding-top: 5px !important;*/
+	 top: -1px;
 }
 
 /* Hide focus border on address field */
@@ -123,4 +124,16 @@
 }
 .UrlBar {
 	height: 34px;
+}
+
+/* Clickable URL subdomain segments */
+.UrlFragment-LinkWrapper:hover .UrlFragment--Highlight {
+	text-decoration: underline;
+}
+.UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover {
+    text-decoration: unset;
+}
+.UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover > span > span:hover,
+.UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover > span > span:hover ~ span {
+    text-decoration: underline;
 }
