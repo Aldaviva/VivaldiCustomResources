@@ -1,6 +1,15 @@
-/* Hide the bookmark button, reader mode button, mixed content warning, blocked content warning, and address dropdown button in the address bar */
-.UrlBar-AddressField .toolbar.toolbar-small .button-toolbar:not(.create-qr-code),
-.UrlBar-AddressField .BookmarkButton {
+/*
+ * Vivaldi developer tools: vivaldi.exe --debug-packed-apps
+ */
+
+/*
+ * Hide the bookmark button, reader mode button, and address dropdown button in the address bar
+ * Leave the QR code button and translate button visible
+ * TODO: hide mixed content warning and blocked content warning
+ */
+.UrlBar-AddressField .toolbar.toolbar-small > .pageload + div[class='button-toolbar'], /* Reader View */
+.UrlBar-AddressField .BookmarkButton, /* Bookmark */
+.UrlBar-AddressField .BookmarkButton + .toolbar { /* Address dropdown */
 	display: none;
 }
 .UrlBar-AddressField .pageload .pageload-ticker:last-child {
@@ -131,9 +140,16 @@
 	text-decoration: underline;
 }
 .UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover {
-    text-decoration: unset;
+	text-decoration: unset;
 }
 .UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover > span > span:hover,
 .UrlFragment-LinkWrapper:hover > .UrlFragment-Link:nth-child(1):hover > span > span:hover ~ span {
-    text-decoration: underline;
+	text-decoration: underline;
+}
+
+/* Prevent modal dialogs (like Translate Page) from being positioned so they're cut off by the edge of the window when their opening button is hidden or very close to the window edge. */
+#modal-bg {
+	left: unset;
+	right: 0;
+	transform: unset;
 }
