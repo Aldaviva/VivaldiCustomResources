@@ -77,7 +77,6 @@
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
 .UrlBar-UrlField,
 .UrlFragment-Wrapper {
-	 /*padding-top: 5px !important;*/
 	 top: -1px;
 }
 
