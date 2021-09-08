@@ -148,7 +148,7 @@
 }
 
 /* Prevent modal dialogs (like Translate Page) from being positioned so they're cut off by the edge of the window when their opening button is hidden or very close to the window edge. */
-#modal-bg {
+.button-popup > #modal-bg {
 	left: unset;
 	right: 0;
 	transform: unset;
