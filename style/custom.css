@@ -7,7 +7,7 @@
  * Leave the QR code button and translate button visible
  * TODO: hide mixed content warning and blocked content warning
  */
-.UrlBar-AddressField .toolbar.toolbar-small > .pageload + div[class='button-toolbar'], /* Reader View */
+.UrlBar-AddressField .toolbar.toolbar-small button[title="Reader View"], /* Reader View */
 .UrlBar-AddressField .BookmarkButton, /* Bookmark */
 .UrlBar-AddressField .BookmarkButton + .toolbar { /* Address dropdown */
 	display: none;
