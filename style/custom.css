@@ -77,7 +77,7 @@
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
 .UrlBar-UrlField,
 .UrlFragment-Wrapper {
-	 top: -1px;
+	top: -1px;
 }
 
 /* Hide focus border on address field */
@@ -110,6 +110,14 @@
 .toolbar-tabbar > .button-toolbar > button {
 	height: 26px;
 	min-height: auto;
+}
+
+/* Make close button red colors the same as Windows 10 Explorer in dark mode */
+#browser.win.win10 #header #titlebar .window-buttongroup button.window-close:hover:active {
+	background-color: #8b0a14;
+}
+#browser.win.win10 #header #titlebar .window-buttongroup button.window-close:hover {
+	background-color: #e81123;
 }
 
 /* Hide content blocker button in URL bar */
