@@ -135,7 +135,7 @@
 		}
 	}
 
-	vivaldi.tabsPrivate.onKeyboardShortcut.addListener(shortcut => {
+	vivaldi.tabsPrivate.onKeyboardShortcut.addListener((_, shortcut) => {
 		const shortcutHandler = SHORTCUT_HANDLERS[shortcut];
 		if(shortcutHandler){
 			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
