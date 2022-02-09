@@ -3,13 +3,13 @@
  */
 
 /*
- * Hide the bookmark button, reader mode button, and address dropdown button in the address bar
- * Leave the QR code button and translate button visible
- * TODO: hide mixed content warning and blocked content warning
+ * Hide the bookmark, reader mode, blocked content, and address dropdown buttons in the address bar
+ * Leave the QR code and translate buttons visible
  */
 .UrlBar-AddressField .toolbar.toolbar-small button[title="Reader View"], /* Reader View */
 .UrlBar-AddressField .BookmarkButton, /* Bookmark */
-.UrlBar-AddressField .BookmarkButton + .toolbar { /* Address dropdown */
+.UrlBar-AddressField .toolbar.toolbar-small button[title="Show typed history"], /* Address dropdown */
+.UrlBar-AddressField .toolbar.toolbar-small button[title="Content has been blocked."] { /* Cookies or other contents were blocked */
 	display: none;
 }
 .UrlBar-AddressField .pageload .pageload-ticker:last-child {
@@ -82,8 +82,7 @@
 
 /* Hide focus border on address field */
 .UrlBar-AddressField:focus-within {
-	border-color: transparent;
-	box-shadow: none;
+	outline: none;
 }
 
 /* Hide synced tabs and closed tabs buttons */
@@ -98,6 +97,9 @@
 }
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
+#tabs-container {
+	min-height:  26px;
+}
 #titlebar .window-buttongroup button:not(.vivaldi),
 #titlebar .window-buttongroup button:not(.vivaldi) {
 	height: 26px !important;
