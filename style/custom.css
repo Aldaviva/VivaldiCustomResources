@@ -162,3 +162,11 @@
 	right: 0;
 	transform: unset;
 }
+
+/* Get rid of extra 4px margin to the right of the address bar */
+.UrlBar {
+	gap: 0;
+}
+.UrlBar-AddressField {
+	margin: 0 var(--ToolbarItemGap);
+}
