@@ -12,5 +12,5 @@ window.addEventListener("DOMContentLoaded", event => {
 		inoreaderSubscribeButton.style.marginLeft = "8px";
 
 		vivaldiSubscribeButton.parentElement.appendChild(inoreaderSubscribeButton);
-	}, 20);
+	}, 50);
 });
