@@ -163,3 +163,8 @@
 .UrlBar-AddressField {
 	margin: 0 var(--ToolbarItemGap);
 }
+
+/* Hide the Customize gear icon on the Speed Dial page */
+.SpeedDialView-Settings-Button {
+	display: none;
+}
