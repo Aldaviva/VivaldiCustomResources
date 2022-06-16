@@ -4,7 +4,7 @@
 
 /*
  * Hide the bookmark, reader mode, blocked content, and address dropdown buttons in the address bar
- * Leave the QR code and translate buttons visible
+ * Leave the QR code, translate, and RSS buttons visible
  */
 .UrlBar-AddressField .toolbar.toolbar-small button[title="Reader View"], /* Reader View */
 .UrlBar-AddressField .BookmarkButton, /* Bookmark */
@@ -57,13 +57,6 @@
 	border-bottom-left-radius: var(--radiusRoundedLess);
 }
 
-/* Hide unsecure HTTP icon and warning in address bar */
-.UrlBar-AddressField .SiteInfoButton.warning,
-.UrlBar-AddressField .SiteInfoButton.web,
-.UrlBar-AddressField .SiteInfoButton.internal {
-	display: none;
-}
-
 /* Make the Extended Validation lock icon be the same color as the normal one */
 .UrlBar-AddressField .SiteInfoButton.certified {
 	fill: var(--colorFgFadedMore);
@@ -75,9 +68,9 @@
 }
 
 /* Fix URL text in address bar being too low by 1px, should be vertically centered */
-.UrlBar-UrlField,
-.UrlFragment-Wrapper {
-	top: -1px;
+.UrlBar-UrlFieldWrapper {
+	margin-top: -1px;
+	margin-bottom: 1px;
 }
 
 /* Hide focus border on address field */
@@ -136,9 +129,9 @@
  * Hide the back and forward buttons.
  * I'm not removing them using Customize › Remove From Toolbar because I still want to trigger synthetic right-clicks on them to show their context menus using custom.js.
  */
-.UrlBar .toolbar-droptarget [title ^= "Go to previous page"],
-.UrlBar .toolbar-droptarget [title ^= "Go to next page"] {
-	display: none;
+.toolbar-mainbar [title ^= "Go to previous page"],
+.toolbar-mainbar [title ^= "Go to next page"] {
+	display: none !important;
 }
 .UrlBar {
 	height: 34px;

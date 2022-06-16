@@ -120,7 +120,7 @@
 		 * on the history state. This way, we can always find the button by accessing the span's 
 		 * parent.
 		 */
-		const navigationButtonSpanEl = document.querySelector(".UrlBar .toolbar-droptarget [title ^= '" + navigationButtonTitle + "'] span");
+		const navigationButtonSpanEl = document.querySelector(".toolbar-mainbar [title ^= '" + navigationButtonTitle + "'] span");
 
 		if(navigationButtonSpanEl){
 			const rightClickEvent = new MouseEvent("contextmenu", {
