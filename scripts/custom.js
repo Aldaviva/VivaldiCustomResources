@@ -8,29 +8,20 @@
  *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
  *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
  *
- * Keyboard Machine source: https://forum.vivaldi.net/topic/33122/custom-keyboard-shortcuts-mod
  * Vivaldi developer tools: vivaldi.exe --debug-packed-apps
  */
+(function(){
 
-/**
- * Keyboard Machine, a Mod for Vivaldi
- * Make custom shortcuts that do stuff™ and use them in the vivaldi UI
- * Based on "button machine". NO COPYRIGHT RESERVED. lonm.vivaldi.net
- * Version 1.0.0
- */
-
-(function keyboardMachine(){
-	/**
-	 * key: String of what keys to press - written in the form "Ctrl+Shift+Alt+Key"
-	 */
-	const SHORTCUT_HANDLERS = {
-		"Ctrl+Shift+C": copyCurrentPageUrl,
-		"Ctrl+Shift+Alt+V": pasteAndGoInNewTab,
-		"Ctrl+E": toggleExtensionToolbarButtons,
-		"Alt+H": hibernateBackgroundTabs,
-		"Alt+Z": () => openHistoryMenu("back"),
-		"Alt+X": () => openHistoryMenu("forward")
-	};
+	const shortcutSplitter = /(?<!\+|^)\+/;
+	
+	const keyBindings = [
+		{ shortcut: { key: "C", ctrl: true, shift: true }, handler: copyCurrentPageUrl },
+	 	{ shortcut: { key: "V", ctrl: true, shift: true, alt: true }, handler: pasteAndGoInNewTab },
+	 	{ shortcut: { key: "E", ctrl: true }, handler: toggleExtensionToolbarButtons },
+	 	{ shortcut: { key: "H", alt: true }, handler: hibernateBackgroundTabs },
+	 	{ shortcut: { key: "Z", alt: true }, handler: () => openHistoryMenu("back") },
+	 	{ shortcut: { key: "X", alt: true }, handler: () => openHistoryMenu("forward") },
+	];
 
 	function copyCurrentPageUrl() {
 		const oldFocus = document.activeElement;
@@ -135,9 +126,39 @@
 		}
 	}
 
-	vivaldi.tabsPrivate.onKeyboardShortcut.addListener((_, shortcut) => {
-		const shortcutHandler = SHORTCUT_HANDLERS[shortcut];
-		if(shortcutHandler){
+	vivaldi.tabsPrivate.onKeyboardShortcut.addListener((_, shortcutString) => {
+		const splitShortcut = shortcutString.split(shortcutSplitter);
+
+		const shortcut = {
+			key: "",
+			ctrl: false,
+			alt: false,
+			shift: false
+		};
+
+		for(const key of splitShortcut){
+			switch(key){
+				case "Ctrl":
+					shortcut.ctrl = true;
+					break;
+				case "Alt":
+					shortcut.alt = true;
+					break;
+				case "Shift":
+					shortcut.shift = true;
+					break;
+				default:
+					shortcut.key = key;
+					break;
+			}
+		}
+		
+		const keyBinding = keyBindings.find(binding => binding.shortcut.key.toLowerCase() === shortcut.key.toLowerCase() &&
+				!!binding.shortcut.alt === !!shortcut.alt &&
+				!!binding.shortcut.ctrl === !!shortcut.ctrl &&
+				!!binding.shortcut.shift === !!shortcut.shift);
+
+		if(keyBinding){
 			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
 			const chromeCurrentWindowIdPromise = new Promise(resolve => chrome.windows.getCurrent(currentWindow => resolve(currentWindow.id)));
 			const vivaldiCurrentWindowIdPromise = new Promise(resolve => vivaldi.windowPrivate.getCurrentId(resolve));
@@ -145,7 +166,7 @@
 			Promise.all([chromeCurrentWindowIdPromise, vivaldiCurrentWindowIdPromise])
 				.then(([chromeCurrentWindowId, vivaldiCurrentWindowId]) => {
 					if(chromeCurrentWindowId === vivaldiCurrentWindowId){
-						shortcutHandler();
+						keyBinding.handler();
 					}
 				});
 
