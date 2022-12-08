@@ -78,15 +78,16 @@
 	outline: none;
 }
 
-/* Hide synced tabs and closed tabs buttons */
-/*.sync-and-trash-container {
-	display: none;
-}*/
-
-/* Remove extra space above tabs when window is not maximized */
-#browser.win #tabs-tabbar-container.top {
+/* Remove extra space above tabs */
+#browser.tabs-top #header {
+    min-height: initial;
+    height: calc(26px / var(--uiZoomLevel));
+}
+#browser.tabs-top.stacks-substrip #header:has(#tabs-subcontainer) {
+	height: calc(61px / var(--uiZoomLevel));
+}
+.win10.normal #tabs-tabbar-container.top {
 	padding-top: 0;
-	max-height: 26px;
 }
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
