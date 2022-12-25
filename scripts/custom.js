@@ -160,15 +160,11 @@
 
 		if(keyBinding){
 			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
-			const chromeCurrentWindowIdPromise = new Promise(resolve => chrome.windows.getCurrent(currentWindow => resolve(currentWindow.id)));
-			const vivaldiCurrentWindowIdPromise = new Promise(resolve => vivaldi.windowPrivate.getCurrentId(resolve));
-
-			Promise.all([chromeCurrentWindowIdPromise, vivaldiCurrentWindowIdPromise])
-				.then(([chromeCurrentWindowId, vivaldiCurrentWindowId]) => {
-					if(chromeCurrentWindowId === vivaldiCurrentWindowId){
-						keyBinding.handler();
-					}
-				});
+			chrome.windows.getCurrent(currentWindow => {
+				if(currentWindow.focused){
+					keyBinding.handler();
+				}
+			});
 
 			return false;
 		}
