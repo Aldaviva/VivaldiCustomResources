@@ -89,7 +89,7 @@
 .win10.normal #tabs-tabbar-container.top {
 	padding-top: 0;
 }
-.win10.normal #tabs-tabbar-container.top .tab-position {
+.win10 #tabs-tabbar-container.top .tab-position {
 	margin-top: 4px;
 	height: auto;
 }
