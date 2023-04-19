@@ -26,6 +26,9 @@
 .toolbar-extensions .button-toolbar[class="button-toolbar"] {
 	display: none;
 }
+.toolbar-extensions {
+	min-width: initial !important;
+}
 
 /* Hide new tab button */
 .button-toolbar.newtab {
@@ -67,12 +70,6 @@
 	border-radius: 0 !important;
 }
 
-/* Fix URL text in address bar being too low by 1px, should be vertically centered */
-.UrlBar-UrlFieldWrapper {
-	margin-top: -1px;
-	margin-bottom: 1px;
-}
-
 /* Hide focus border on address field */
 .UrlBar-AddressField:focus-within {
 	outline: none;
@@ -98,6 +95,7 @@
 #tabs-container {
 	min-height:  26px;
 }
+#tabs-tabbar-container,
 #titlebar .window-buttongroup button:not(.vivaldi),
 #titlebar .window-buttongroup button:not(.vivaldi) {
 	height: 26px !important;
@@ -109,7 +107,9 @@
 }
 .toolbar-tabbar > .button-toolbar > button {
 	height: 26px;
+	width: 26px;
 	min-height: auto;
+	min-width: auto;
 }
 
 /* Make close button red colors the same as Windows 10 Explorer in dark mode */
@@ -161,12 +161,9 @@
 	transform: unset;
 }
 
-/* Get rid of extra 4px margin to the right of the address bar */
-.UrlBar {
-	gap: 0;
-}
+/* Give address bar some margins */
 .UrlBar-AddressField {
-	margin: 0 var(--ToolbarItemGap);
+	margin: 0 5px;
 }
 
 /* Hide the Customize gear icon on the Speed Dial page */
