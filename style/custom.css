@@ -76,26 +76,21 @@
 }
 
 /* Remove extra space above tabs */
-#browser.tabs-top #header {
-    min-height: initial;
-    height: calc(26px / var(--uiZoomLevel));
+.tabs-top.address-top#browser.win:not(.fullscreen, .disable-titlebar) #header {
+	min-height: calc(26px / var(--uiZoomLevel));
 }
 #browser.tabs-top.stacks-substrip #header:has(#tabs-subcontainer) {
 	height: calc(61px / var(--uiZoomLevel));
 }
-.win10.normal #tabs-tabbar-container.top {
+.win.normal #tabs-tabbar-container.top {
 	padding-top: 0;
-}
-.win10 #tabs-tabbar-container.top .tab-position {
-	margin-top: 4px;
-	height: auto;
 }
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
 #tabs-container {
-	min-height:  26px;
+	min-height: 26px;
 }
-#tabs-tabbar-container,
+.tabs-top.address-top#browser.win:not(.fullscreen, .disable-titlebar) #tabs-tabbar-container,
 #titlebar .window-buttongroup button:not(.vivaldi),
 #titlebar .window-buttongroup button:not(.vivaldi) {
 	height: 26px !important;
@@ -113,10 +108,10 @@
 }
 
 /* Make close button red colors the same as Windows 10 Explorer in dark mode */
-#browser.win.win10 #header #titlebar .window-buttongroup button.window-close:hover:active {
+#browser.win #header #titlebar .window-buttongroup button.window-close:hover:active {
 	background-color: #8b0a14;
 }
-#browser.win.win10 #header #titlebar .window-buttongroup button.window-close:hover {
+#browser.win #header #titlebar .window-buttongroup button.window-close:hover {
 	background-color: #e81123;
 }
 
