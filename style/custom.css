@@ -170,3 +170,8 @@
 .SpeedDialView-Settings-Button {
 	display: none;
 }
+
+/* Revert the address bar progress bar background color to the non-ugly 6.5 color */
+.theme-dark.acc-dark .UrlBar-AddressField .pageload .pageload-indicator {
+	background-color: var(--colorAccentBg) !important;
+}
