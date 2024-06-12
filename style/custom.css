@@ -1,5 +1,5 @@
-/*
- * Vivaldi developer tools: vivaldi.exe --debug-packed-apps
+﻿/**
+ * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I)
  */
 
 /*
@@ -34,7 +34,7 @@
 .button-toolbar.newtab {
 	display: none;
 }
-/* Make tabs fill in remaining empty space */
+/* Make tabs fill in remaining empty horizontal space */
 #tabs-container.top > .resize {
 	margin-right: 5px;
 }
@@ -76,16 +76,18 @@
 }
 
 /* Hide focus border on address field */
-.UrlBar-AddressField:focus-within {
-	outline: none;
+.UrlBar-AddressField:focus-within,
+.SearchField:focus-within,
+.MailSearchField-Inner:focus-within {
+	outline: none !important;
 }
 
 /* Remove extra space above tabs */
-.tabs-top.address-top#browser.win:not(.fullscreen, .disable-titlebar) #header {
-	min-height: calc(26px / var(--uiZoomLevel));
+#browser.tabs-top.address-top.win:not(.fullscreen, .disable-titlebar) #header {
+	min-height: calc(28px / var(--uiZoomLevel));
 }
 #browser.tabs-top.stacks-substrip #header:has(#tabs-subcontainer) {
-	height: calc(61px / var(--uiZoomLevel));
+	height: calc(65px / var(--uiZoomLevel));
 }
 .win.normal #tabs-tabbar-container.top {
 	padding-top: 0;
@@ -93,21 +95,21 @@
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
 #tabs-container {
-	min-height: 26px;
+	min-height: 28px;
 }
 .tabs-top.address-top#browser.win:not(.fullscreen, .disable-titlebar) #tabs-tabbar-container,
 #titlebar .window-buttongroup button:not(.vivaldi),
 #titlebar .window-buttongroup button:not(.vivaldi) {
-	height: 26px !important;
+	height: 28px !important;
 }
 .tab-position .tab .tab-header {
-	flex-basis: 26px;
-	padding-top: 4px;
+	flex-basis: 28px;
+	padding-top: 6px;
 	padding-bottom: 4px;
 }
 .toolbar-tabbar > .button-toolbar > button {
-	height: 26px;
-	width: 26px;
+	height: 28px;
+	width: 28px;
 	min-height: auto;
 	min-width: auto;
 }
@@ -175,4 +177,140 @@
 .theme-dark.acc-dark .UrlBar-AddressField .pageload .pageload-indicator {
 	background-color: var(--colorAccentBg) !important;
 	opacity: 0.67;
+}
+
+/* Disable ugly Katie-style button gradients */
+.toolbar-default .button-toolbar > button:enabled,
+select:enabled:not([multiple], [size]),
+.VivaldiSelector:not(:focus-within) .Inner__control,
+.calendar-add-event-button,
+#calendar_panel .PeriodPicker.PeriodPicker,
+input[type=button]:not(.circular),
+input[type=submit],
+input[type=color],
+.FormButton {
+	background-image: none;
+}
+
+/* Hide mail list filter view dropdown button, because the row of buttons is better */
+.toolbar + .MailListButtons-FilterIcon {
+	display: none;
+}
+
+/* Get rid of ugly brown background on mail header hover */
+.button-with-dropdown-container:hover,
+.button-with-dropdown-container:focus-within,
+.button-with-dropdown-container > button:hover,
+.button-with-dropdown-container > button:focus-visible,
+.button-with-dropdown-container:hover button:last-of-type:after,
+.button-with-dropdown-container:focus-visible button:last-of-type:after,
+.button-with-dropdown-container:focus-within button:last-of-type:after,
+.button-with-dropdown-container:hover button:last-of-type:before,
+.button-with-dropdown-container:focus-visible button:last-of-type:before,
+.button-with-dropdown-container:focus-within button:last-of-type:before {
+	background-color: transparent;
+}
+
+/* On Windows 11, unmaximized windows remove the top 1px of the window client area, so restore it to make thindicators always the same height. Requires custom.js to let us detect Windows 11. */
+#app.win11 #browser.normal.tabs-top #header {
+	margin-top: 1px;
+}
+
+/**
+ * Skinny theme
+ */
+
+/* Active tab thindicator */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .tab-position .tab.active {
+	box-shadow: inset 0 2px 0 var(--colorHighlightBg);
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	color: var(--colorHighlightBg) !important;
+}
+
+/* No glow on active tab favicon */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .tab-position .tab.active .tab-header .favicon {
+	filter: none;
+}
+
+/* Only use thindicators to show active panel tab, not background color */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .addwebpanel-wrapper > button.active,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > .button-toolbar.active,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > * > .button-toolbar.active,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > button.active {
+	background-color: transparent;
+	color: var(--colorHighlightBg);
+	/*box-shadow: inset 1px 0 0 var(--colorHighlightBg);*/
+}
+
+/* Button hover */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer,.toolbar-spacer-flexible, .toolbar-divider):hover > button {
+	background-color: var(--colorHighlightBg);
+	color: var(--colorFg);
+	fill: var(--colorFg);
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer,.toolbar-spacer-flexible, .toolbar-divider):hover > button.button-on {
+
+}
+/* Button hover: white icon on yellow button background drop shadow for increased contrast */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:hover svg {
+	/* If you update this style, be sure to update the embedded SVG image for the Google Messages icon below as well */
+	filter: drop-shadow(0 0 2px hsl(0deg 0% 0% / 58%));
+}
+
+/* Panel button hover */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar:not(.toolbar-spacer,.toolbar-spacer-flexible, .toolbar-divider):hover > button {
+	margin-left: 3px;
+	padding-left: 3px;
+}
+
+/* Top toolbar hover and active states */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f :is(.mainbar, .MailListButtons) .button-toolbar:not(.toolbar-spacer,.toolbar-spacer-flexible, .toolbar-divider):hover > button {
+	border-radius: var(--radius);
+}
+
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .MailListButtons .button-toolbar button {
+	border-width: 0;
+}
+
+/* Active mail folder */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected],
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] :is(.mail-parent, .mail-child) {
+	color: var(--colorHighlightBg);
+	fill: var(--colorHighlightBg);
+	background-color: transparent !important;
+	box-shadow: none;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .maildate,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .status-indicators,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .mail-queued svg {
+	color: var(--colorHighlightBg);
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .unread svg {
+	fill: var(--colorHighlightBg);
+}
+
+/* Default mail flag color (even though semantically it's supposed to be red) */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .flag-color.flag-red svg {
+	fill: #ffaa00 !important;
+}
+
+/*
+ * Google Messages web panel icon
+ * Web panel icons can't be set to a custom icon by a theme
+ */
+ #switch .button-toolbar-webpanel button[title *= "https://messages.google.com/web"] {
+	background-origin: content-box;
+	background-clip: border-box;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 28px;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI4IDI4Ij48cGF0aCBkPSJNMTguMzYsOS41YzEuMTYyLDAsMi4xNTIuOTksMi4xNCwyLjE2NHY0LjY4M2MwLDEuMTYyLS45OSwyLjE1Mi0yLjE1MiwyLjE1MmgtNy44M2MtMS4xNjIsMC0yLjAxOC0uOTc4LTIuMDE4LTIuMTUydi0zLjQ3M2wtMS40OC0yLjU2OGMtLjMwNi0uNDE2LS4wNDktLjgwNy40MDMtLjgwN2gxMC45MzZNMTguMzYsOEg3LjQyNGMtLjc5MiwwLTEuNDkzLjQxNS0xLjgzMSwxLjA4My0uMzI2LjY0NC0uMjY1LDEuMzk1LjE2LDIuMDI4bDEuMjQ4LDIuMTY1djMuMDcyYzAsMi4wNDgsMS41NDUsMy42NTIsMy41MTgsMy42NTJoNy44M2MxLjk4LDAsMy42NTItMS42NzIsMy42NTItMy42NTJ2LTQuNjgzYy4wMS0uOTUzLS4zNjctMS44NzQtMS4wNjEtMi41NzUtLjY4NS0uNjkyLTEuNjI1LTEuMDg5LTIuNTc4LTEuMDg5aDBaIiBmaWxsPSIjZTBlMGUwIi8+PHBhdGggZD0iTTE5LDEzLjVjMCwuMjc1LS4yMjUuNS0uNS41aC04Yy0uMjc1LDAtLjUtLjIyNS0uNS0uNXMuMjI1LS41LjUtLjVoOGMuMjc1LDAsLjUuMjI1LjUuNVpNMTYuNSwxNWgtNmMtLjI3NSwwLS41LjIyNS0uNS41cy4yMjUuNS41LjVoNmMuMjc1LDAsLjUtLjIyNS41LS41cy0uMjI1LS41LS41LS41Wk0xMC41LDEyaDhjLjI3NSwwLC41LS4yMjUuNS0uNXMtLjIyNS0uNS0uNS0uNWgtOGMtLjI3NSwwLS41LjIyNS0uNS41cy4yMjUuNS41LjVaIiBmaWxsPSIjZTBlMGUwIiBmaWxsLW9wYWNpdHk9Ii4zNSIvPjwvc3ZnPg==) !important;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar-webpanel:hover button[title *= "https://messages.google.com/web"] {
+	/* Same image as above but with the drop shadow filter from hovering over the panel button */
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI4IDI4IiBzdHlsZT0iZmlsdGVyOiBkcm9wLXNoYWRvdygwIDAgMnB4IGhzbCgwZGVnIDAlIDAlIC8gNTglKSkiPjxwYXRoIGQ9Ik0xOC4zNiw5LjVjMS4xNjIsMCwyLjE1Mi45OSwyLjE0LDIuMTY0djQuNjgzYzAsMS4xNjItLjk5LDIuMTUyLTIuMTUyLDIuMTUyaC03LjgzYy0xLjE2MiwwLTIuMDE4LS45NzgtMi4wMTgtMi4xNTJ2LTMuNDczbC0xLjQ4LTIuNTY4Yy0uMzA2LS40MTYtLjA0OS0uODA3LjQwMy0uODA3aDEwLjkzNk0xOC4zNiw4SDcuNDI0Yy0uNzkyLDAtMS40OTMuNDE1LTEuODMxLDEuMDgzLS4zMjYuNjQ0LS4yNjUsMS4zOTUuMTYsMi4wMjhsMS4yNDgsMi4xNjV2My4wNzJjMCwyLjA0OCwxLjU0NSwzLjY1MiwzLjUxOCwzLjY1Mmg3LjgzYzEuOTgsMCwzLjY1Mi0xLjY3MiwzLjY1Mi0zLjY1MnYtNC42ODNjLjAxLS45NTMtLjM2Ny0xLjg3NC0xLjA2MS0yLjU3NS0uNjg1LS42OTItMS42MjUtMS4wODktMi41NzgtMS4wODloMFoiIGZpbGw9IiNlMGUwZTAiLz48cGF0aCBkPSJNMTksMTMuNWMwLC4yNzUtLjIyNS41LS41LjVoLThjLS4yNzUsMC0uNS0uMjI1LS41LS41cy4yMjUtLjUuNS0uNWg4Yy4yNzUsMCwuNS4yMjUuNS41Wk0xNi41LDE1aC02Yy0uMjc1LDAtLjUuMjI1LS41LjVzLjIyNS41LjUuNWg2Yy4yNzUsMCwuNS0uMjI1LjUtLjVzLS4yMjUtLjUtLjUtLjVaTTEwLjUsMTJoOGMuMjc1LDAsLjUtLjIyNS41LS41cy0uMjI1LS41LS41LS41aC04Yy0uMjc1LDAtLjUuMjI1LS41LjVzLjIyNS41LjUuNVoiIGZpbGw9IiNlMGUwZTAiIGZpbGwtb3BhY2l0eT0iLjM1Ii8+PC9zdmc+) !important;
+}
+#switch .button-toolbar-webpanel button[title *= "https://messages.google.com/web"] .button-icon.favicon {
+	display: none;
 }

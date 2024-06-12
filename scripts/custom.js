@@ -8,7 +8,7 @@
  *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
  *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
  *
- * Vivaldi developer tools: vivaldi.exe --debug-packed-apps
+ * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I)
  */
 (function(){
 
@@ -185,4 +185,26 @@
 			chrome.runtime.sendMessage(webAutoTypeExtensionId, message);
 		}
 	});
+})();
+
+/**
+ * Let custom.css know the OS major version so it can deal with the -1px top margin in Windows 11 unmaximized windows.
+ */
+(function(){
+	navigator.userAgentData.getHighEntropyValues(["platformVersion"])
+		.then(userAgentData => {
+			let classToAdd = null;
+			if(navigator.userAgentData.platform === "Windows"){
+				const platformMajorVersion = parseInt(userAgentData.platformVersion.split(".")[0], 10);
+				if(platformMajorVersion >= 13){
+					classToAdd = "win11";
+				} else if(platformMajorVersion > 0){
+					classToAdd = "win10";
+				} else {
+					classToAdd = "win8OrEarlier";
+				}
+			}
+			// Can't add a class to #browser because Vivaldi will clobber it with its own authoritative state, so pick another element
+			classToAdd && document.getElementById("app").classList.add(classToAdd);
+		});
 })();
