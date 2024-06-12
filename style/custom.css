@@ -222,10 +222,12 @@ body.win11 #browser.normal.tabs-top #header {
 
 /* Active tab thindicator */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .tab-position .tab.active {
+	color: var(--colorHighlightBg) !important;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f.hasfocus .tab-position .tab.active {
 	box-shadow: inset 0 2px 0 var(--colorHighlightBg);
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-	color: var(--colorHighlightBg) !important;
 }
 
 /* No glow on active tab favicon */
@@ -313,4 +315,6 @@ body.win11 #browser.normal.tabs-top #header {
 }
 #switch .button-toolbar-webpanel button[title *= "https://messages.google.com/web"] .button-icon.favicon {
 	display: none;
+}
+one;
 }
