@@ -212,7 +212,7 @@ input[type=color],
 }
 
 /* On Windows 11, unmaximized windows remove the top 1px of the window client area, so restore it to make thindicators always the same height. Requires custom.js to let us detect Windows 11. */
-#app.win11 #browser.normal.tabs-top #header {
+body.win11 #browser.normal.tabs-top #header {
 	margin-top: 1px;
 }
 

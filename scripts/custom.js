@@ -205,6 +205,6 @@
 				}
 			}
 			// Can't add a class to #browser because Vivaldi will clobber it with its own authoritative state, so pick another element
-			classToAdd && document.getElementById("app").classList.add(classToAdd);
+			classToAdd && document.body.classList.add(classToAdd);
 		});
 })();
