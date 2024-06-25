@@ -12,3 +12,6 @@ Make the browser's chrome appearance more minimal, enable [maximum tab width](ht
 
 ### `custom.js`
 Add more keyboard shortcuts, and notify my password manager (using [Aldaviva/WebAutoTypeVivaldiExtension](https://github.com/Aldaviva/WebAutoTypeVivaldiExtension)) when the active window changes.
+
+## Theme
+The Skinny theme is [available on Vivaldi Community](https://themes.vivaldi.net/themes/q2Vv9O0R7KL) or in [Skinny.zip](https://github.com/Aldaviva/VivaldiCustomResources/raw/master/themes/Skinny.zip).
