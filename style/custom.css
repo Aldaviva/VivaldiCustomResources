@@ -136,8 +136,8 @@
  * Hide the back and forward buttons.
  * I'm not removing them using Customize › Remove From Toolbar because I still want to trigger synthetic right-clicks on them to show their context menus using custom.js.
  */
-.toolbar-mainbar [title ^= "Go to previous page"],
-.toolbar-mainbar [title ^= "Go to next page"] {
+.toolbar-mainbar .button-toolbar:has(> button[aria-label = "Previous Page"]),
+.toolbar-mainbar .button-toolbar:has(> button[aria-label = "Next Page"]) {
 	display: none !important;
 }
 .UrlBar {

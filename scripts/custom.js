@@ -96,31 +96,26 @@
 	}
 
 	function openHistoryMenu(direction) {
-		let navigationButtonTitle;
+		let navigationAriaLabel;
 		switch(direction){
 			case "back":
-				navigationButtonTitle = "Go to previous page";
+				navigationAriaLabel = "Previous Page";
 				break;
 			case "forward":
-				navigationButtonTitle = "Go to next page";
+				navigationAriaLabel = "Next Page";
 				break;
 		}
 
-		/* Find the button's child span element instead of the button itself because Vivaldi
-		 * inconsistently attaches the title attribute to the button or its parent div depending
-		 * on the history state. This way, we can always find the button by accessing the span's 
-		 * parent.
-		 */
-		const navigationButtonSpanEl = document.querySelector(".toolbar-mainbar.toolbar-visible [title ^= '" + navigationButtonTitle + "'] span");
+		const navigationButtonEl = document.querySelector(".toolbar-mainbar.toolbar-visible .button-toolbar > button[aria-label = '"+navigationAriaLabel+"']");
 
-		if(navigationButtonSpanEl){
+		if(navigationButtonEl){
 			const rightClickEvent = new MouseEvent("contextmenu", {
 				bubbles: true,
 				clientX: window.innerWidth/2,
 				clientY: window.innerHeight/2
 			});
 
-			navigationButtonSpanEl.parentElement.dispatchEvent(rightClickEvent);
+			navigationButtonEl.dispatchEvent(rightClickEvent);
 		} else {
 			console.error("Could not find the "+direction+" button in the navigation toolbar. This can happen if you removed it using Customize › Remove From Toolbar. In this case, you can restore it using Customize › Reset Toolbar To Default, and the button will still be hidden by custom.css.");
 		}
