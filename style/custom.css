@@ -284,6 +284,7 @@ body.win11 #browser.normal.tabs-top #header {
 }
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .maildate,
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .status-indicators,
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .body_preview,
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .mail_entry .mail-queued svg {
 	color: var(--colorHighlightBg);
 }
