@@ -3,13 +3,15 @@
  */
 
 /*
- * Hide the bookmark, reader mode, blocked content, and address dropdown buttons in the address bar
+ * Hide the bookmark, reader mode, blocked content, blocked motion sensors, and address dropdown buttons in the address bar
  * Leave the QR code, translate, and RSS buttons visible
  */
 .UrlBar-AddressField .toolbar.toolbar-small button[title="Reader View"], /* Reader View */
 .UrlBar-AddressField .BookmarkButton, /* Bookmark */
 .UrlBar-AddressField .toolbar.toolbar-small button[title="Show typed history"], /* Address dropdown */
-.UrlBar-AddressField .toolbar.toolbar-small button[title="Content has been blocked."] { /* Cookies or other contents were blocked */
+.UrlBar-AddressField .toolbar.toolbar-small button[title="Content has been blocked."], /* Cookies or other contents were blocked */
+.button-addressfield.permission-popup:has(> .ToolbarButton-Button[title $= ' motion sensors.']) /* Motion sensors were blocked */
+{ 
 	display: none;
 }
 .UrlBar-AddressField .pageload .pageload-ticker:last-child {
