@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I)
  */
 
@@ -247,27 +247,27 @@ body.win11 #browser.normal.tabs-top #header {
 }
 
 /* Button hover */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider):hover > button:not(:disabled) {
-	background-color: var(--colorHighlightBg);
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover:not(:disabled) {
+	background-color: var(--colorHighlightBg) !important;
 	background-image: none;
 	color: var(--colorFg);
 	fill: var(--colorFg);
 }
 
 /* Button hover: white icon on yellow button background drop shadow for increased contrast */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:hover :is(svg, .button-title) {
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar button:hover :is(svg, .button-title) {
 	/* If you update this style, be sure to update the embedded SVG image for the Google Messages icon below as well */
 	filter: drop-shadow(0 0 2px hsl(0deg 0% 0% / 58%));
 }
 
 /* Panel button hover */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider):hover > button {
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover {
 	margin-left: 3px;
 	padding-left: 3px;
 }
 
 /* Top toolbar hover and active states */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f :is(.mainbar, .MailListButtons) .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider):hover > button {
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f :is(.mainbar, .MailListButtons) .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover {
 	border-radius: var(--radius);
 }
 
