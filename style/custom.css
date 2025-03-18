@@ -176,8 +176,7 @@
 
 /* Revert the address bar progress bar background color to the non-ugly 6.5 color, and make it more opaque */
 .theme-dark.acc-dark .UrlBar-AddressField .pageload .pageload-indicator {
-	background-color: var(--colorAccentBg) !important;
-	opacity: 0.67;
+	background-color: #ffffff33;
 }
 
 /* Disable ugly Katie-style button gradients */
