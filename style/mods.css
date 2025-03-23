@@ -8,6 +8,6 @@
  */
 
 /* Hide the overlay notification in the middle of the page that tells you that you copied a link or entered fullscreen (of course you already know this, because you did it) */
-#main .overlayinfobubble.show {
+#main .inner .overlayinfobubble.show {
 	display: none;
 }
