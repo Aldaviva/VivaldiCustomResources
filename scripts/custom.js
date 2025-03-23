@@ -8,7 +8,7 @@
  *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
  *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
  *
- * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I)
+ * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I), or vivaldi://inspect/#apps
  */
 (function(){
 
