@@ -1,0 +1,13 @@
+/*
+ * Vivaldi CSS modification installation instructions
+ * 1. Go to vivaldi://experiments
+ * 2. Enable "Allow CSS modifications"
+ * 3. Got to Vivaldi › Settings › Appearance › Custom UI Modifications
+ * 4. Browse for the directory where this CSS file is saved
+ * 5. Restart Vivaldi
+ */
+
+/* Hide the overlay notification in the middle of the page that tells you that you copied a link or entered fullscreen (of course you already know this, because you did it) */
+#main .overlayinfobubble.show {
+	display: none;
+}
