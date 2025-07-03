@@ -42,6 +42,12 @@
 .win.maximized #tabs-container.top > .resize {
 	margin-right: 2px;
 }
+.button-toolbar.newtab + .toolbar-spacer-flexible {
+	display: none;
+}
+.tabs-top #tabs-container .toolbar-tabbar-before:empty {
+	display: none;
+}
 
 /* Hide Vivaldi menu button */
 #titlebar .vivaldi {
@@ -174,11 +180,6 @@
 	display: none;
 }
 
-/* Revert the address bar progress bar background color to the non-ugly 6.5 color, and make it more opaque */
-.theme-dark.acc-dark .UrlBar-AddressField .pageload .pageload-indicator {
-	background-color: #ffffff33;
-}
-
 /* Disable ugly Katie-style button gradients */
 .toolbar-default .button-toolbar > button:enabled,
 select:enabled:not([multiple], [size]),
@@ -242,7 +243,20 @@ body.win11 #browser.normal.tabs-top #header {
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > button.active {
 	background-color: transparent;
 	color: var(--colorHighlightBg);
-	/*box-shadow: inset 1px 0 0 var(--colorHighlightBg);*/
+}
+
+/* Thin loading progress bar in address bar */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .UrlBar-AddressField .pageload .pageload-indicator {
+	opacity: 1;
+	height: 2px;
+	background-color: transparent;
+	align-self: flex-end;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .UrlBar-AddressField .pageload.progress-done:not(.progressing) .pageload-indicator {
+	opacity: 0;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value {
+	background-color: var(--colorHighlightBg);
 }
 
 /* Button hover */
@@ -262,14 +276,18 @@ body.win11 #browser.normal.tabs-top #header {
 /* Panel button hover */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover {
 	margin-left: 3px;
-	padding-left: 3px;
+	padding-left: 3px;;
+}
+
+/* Window panel selected row background color */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #window-panel .vivaldi-tree .VivaldiList .tree-row[data-selected] .window-entry:not(.window-entry-button) {
+	background-color: transparent !important;
 }
 
 /* Top toolbar hover and active states */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f :is(.mainbar, .MailListButtons) .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover {
 	border-radius: var(--radius);
 }
-
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .MailListButtons .button-toolbar button {
 	border-width: 0;
 }
