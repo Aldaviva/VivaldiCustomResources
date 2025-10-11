@@ -121,12 +121,18 @@
 	min-width: auto;
 }
 
-/* Make close button red colors the same as Windows 10 Explorer in dark mode */
+/* Make close button red colors the same as Windows Explorer in dark mode */
 #browser.win #header #titlebar .window-buttongroup button.window-close:hover:active {
 	background-color: #8b0a14;
 }
+body.win11 #browser.win #header #titlebar .window-buttongroup button.window-close:hover:active {
+	background-color: #c42b1c;
+}
 #browser.win #header #titlebar .window-buttongroup button.window-close:hover {
 	background-color: #e81123;
+}
+body.win11 #browser.win #header #titlebar .window-buttongroup button.window-close:hover {
+	background-color: #b1271a;
 }
 
 /* Hide content blocker button in URL bar */
