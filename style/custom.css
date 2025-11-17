@@ -299,6 +299,7 @@ body.win11 #browser.normal.tabs-top #header {
 }
 
 /* Active mail folder */
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .panel#mail_panel .tree-item:is([data-selected]) .tree-row .mail_panel_node,
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected],
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] :is(.mail-parent, .mail-child) {
 	color: var(--colorHighlightBg);
@@ -314,6 +315,9 @@ body.win11 #browser.normal.tabs-top #header {
 }
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .vivaldi-tree .tree-row[data-selected] .unread svg {
 	fill: var(--colorHighlightBg);
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .item-count {
+	background-color: transparent;
 }
 
 /* Default mail flag color (even though semantically it's supposed to be red) */
