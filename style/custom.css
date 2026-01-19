@@ -153,8 +153,9 @@ body.win11 #browser.win #header #titlebar .window-buttongroup button.window-clos
 .toolbar-mainbar .button-toolbar:has(> button[aria-label = "Next Page"]) {
 	display: none !important;
 }
-.UrlBar {
-	height: 34px;
+.UrlBar-AddressField {
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 /* Clickable URL subdomain segments */
