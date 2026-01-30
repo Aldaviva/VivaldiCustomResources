@@ -50,7 +50,7 @@
 }
 
 /* Hide Vivaldi menu button */
-#titlebar .vivaldi {
+#tabs-container button.vivaldi {
 	display: none;
 }
 .win #tabs-container:not(.none).top {
