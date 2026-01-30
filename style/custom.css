@@ -153,10 +153,6 @@ body.win11 #browser.win #header #titlebar .window-buttongroup button.window-clos
 .toolbar-mainbar .button-toolbar:has(> button[aria-label = "Next Page"]) {
 	display: none !important;
 }
-.UrlBar-AddressField {
-	margin-top: 4px;
-	margin-bottom: 4px;
-}
 
 /* Clickable URL subdomain segments */
 .UrlFragment-LinkWrapper:hover .UrlFragment--Highlight {
@@ -179,7 +175,7 @@ body.win11 #browser.win #header #titlebar .window-buttongroup button.window-clos
 
 /* Give address bar some margins */
 .UrlBar-AddressField {
-	margin: 0 5px;
+	margin: 4px 5px;
 }
 
 /* Hide the Customize gear icon on the Speed Dial page */
