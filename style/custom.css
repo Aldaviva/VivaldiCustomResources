@@ -51,7 +51,7 @@
 
 /* Hide Vivaldi menu button */
 #tabs-container button.vivaldi {
-	display: none;
+	display: none !important;
 }
 .win #tabs-container:not(.none).top {
 	padding-left: 0;
