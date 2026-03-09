@@ -90,35 +90,42 @@
 }
 
 /* Remove extra space above tabs */
-#browser.tabs-top.address-top.win:not(.fullscreen, .disable-titlebar) #header {
-	min-height: calc(28px / var(--uiZoomLevel));
-}
-#browser.tabs-top.stacks-substrip #header:has(#tabs-subcontainer) {
-	height: calc(65px / var(--uiZoomLevel));
-}
-.win.normal #tabs-tabbar-container.top {
+#tabs-tabbar-container.top {
 	padding-top: 0;
+	height: 28px !important;
+	min-height: 28px !important;
+}
+.tab-position {
+	height: 28px;
+}
+.tabs-top.tabs-at-edge .tab-position:not(.is-substack) .tab.active,
+.tabs-top:not(.density-on) .tab-position:not(.is-substack) .tab.active {
+	height: unset;
 }
 
 /* Make title bar buttons (minimize, maximize/restore, close) the correct height for our thinner tab bar */
 #tabs-container {
 	min-height: 28px;
-}
-.tabs-top.address-top#browser.win:not(.fullscreen, .disable-titlebar) #tabs-tabbar-container,
-#titlebar .window-buttongroup button:not(.vivaldi),
-#titlebar .window-buttongroup button:not(.vivaldi) {
-	height: 28px !important;
+	padding-bottom: 0 !important;
 }
 .tab-position .tab .tab-header {
 	flex-basis: 28px;
-	padding-top: 6px;
-	padding-bottom: 4px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 .toolbar-tabbar > .button-toolbar > button {
 	height: 28px;
 	width: 28px;
 	min-height: auto;
 	min-width: auto;
+}
+#browser.win.disable-titlebar .window-buttongroup {
+	height: 28px;
+}
+.window-buttongroup button {
+	height: 28px !important;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 
 /* Make close button red colors the same as Windows Explorer in dark mode */
@@ -228,10 +235,28 @@ body.win11 #browser.normal.tabs-top #header {
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .tab-position .tab.active {
 	color: var(--colorHighlightBg) !important;
 }
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f.hasfocus .tab-position .tab.active {
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f.hasfocus .tab-position .tab.active:not(.tab-group) {
 	box-shadow: inset 0 2px 0 var(--colorHighlightBg);
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f.tabs-at-edge:is(.stacks-dotted,.substrip-tabs-on):not(.tabs-bottom) .tab-group-indicator {
+	top: 0;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f.hasfocus .tab-position .tab.active + .tab-group-indicator .tab-indicator.active {
+	background-color: var(--colorHighlightBg);
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f:is(.stacks-dotted,.substrip-tabs-on):not(.tabs-bottom) .tab-group-indicator .tab-indicator {
+	height: 2px;
+	border: 0;
+	padding: 0;
+	translate: none;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f:is(.tabs-top, .tabs-bottom) .tab-indicator {
+	margin-left: 0;
+	margin-right: 0;
+	border-width: 0;
+	background: none;
 }
 
 /* No glow on active tab favicon */
