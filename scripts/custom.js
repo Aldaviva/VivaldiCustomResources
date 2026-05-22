@@ -74,9 +74,9 @@
 		const showHiddenToggle = "vivaldi.address_bar.extensions.show_hidden_toggle";
 		const showAllToggle = "vivaldi.address_bar.extensions.show_all_toggle";
 
-		prefs.get(showHiddenToggle, oldShowHiddenToggleValue => {
-			prefs.set({ path: showHiddenToggle, value: !oldShowHiddenToggleValue });
-			prefs.set({ path: showAllToggle, value: oldShowHiddenToggleValue });
+		prefs.get(showHiddenToggle).then(oldShowHiddenToggle => {
+			prefs.set({ path: showHiddenToggle, value: !oldShowHiddenToggle.value });
+			prefs.set({ path: showAllToggle, value: oldShowHiddenToggle.value });
 		});
 	}
 
