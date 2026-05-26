@@ -10,7 +10,7 @@
  *
  * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I), or vivaldi://inspect/#apps
  */
-(function(){
+(function() {
 
 	const shortcutSplitter = /(?<!\+|^)\+/;
 	
@@ -29,7 +29,7 @@
 		addressField.select();
 		document.execCommand("copy");
 
-		if(oldFocus) {
+		if (oldFocus) {
 			oldFocus.focus();
 		} else {
 			addressField.blur();
@@ -39,22 +39,41 @@
 	function pasteAndGoInNewTab() {
 		const oldFocus = document.activeElement;
 
-		if(oldFocus){
+		if (oldFocus) {
 			oldFocus.blur();
 		}
 
 		// Very clever, thanks to https://github.com/justdanpo/VivaldiHooks/blob/master/vivaldi/hooks/newtab-middleclick-pasteandgo.js
-		function onPaste(event){
+		function onPaste(event) {
 			event.preventDefault();
+			event.stopPropagation();
+			event.stopImmediatePropagation();
 
 			const clipboardData = event.clipboardData.getData("text/plain");
-			if(clipboardData.length){
-				chrome.tabs.create({ url: clipboardData });
+			if (clipboardData.length) {
+				// https://developer.chrome.com/docs/extensions/reference/api/tabs#method-create
+				const newTabOptions = { url: clipboardData };
+
+				// in Vivaldi 8.0, tabs.create no longer automatically respects Vivaldi's New Tab Position setting (vivaldi.tabs.new_placement)
+				vivaldi.prefs.get("vivaldi.tabs.new_placement", newTabPlacementPreference => {
+					if (newTabPlacementPreference.value === "directrightofcurrent") {
+						chrome.tabs.query({ currentWindow: true, active: true }, activeTabs => {
+							const activeTab = activeTabs[0];
+							if (activeTab) {
+								newTabOptions.index = activeTab.index + 1;
+								newTabOptions.windowId = activeTab.windowId;
+							}
+							chrome.tabs.create(newTabOptions);
+						});
+					} else {
+						chrome.tabs.create(newTabOptions);
+					}
+				});
 			}
 
 			document.removeEventListener("paste", onPaste);
 
-			if(oldFocus) {
+			if (oldFocus) {
 				oldFocus.focus();
 			}
 		}
@@ -108,7 +127,7 @@
 
 		const navigationButtonEl = document.querySelector(".toolbar-mainbar.toolbar-visible .button-toolbar > button[aria-label = '"+navigationAriaLabel+"']");
 
-		if(navigationButtonEl){
+		if (navigationButtonEl) {
 			const rightClickEvent = new MouseEvent("contextmenu", {
 				bubbles: true,
 				clientX: window.innerWidth/2,
@@ -131,8 +150,8 @@
 			shift: false
 		};
 
-		for(const key of splitShortcut){
-			switch(key){
+		for (const key of splitShortcut) {
+			switch (key) {
 				case "Ctrl":
 					shortcut.ctrl = true;
 					break;
@@ -153,10 +172,10 @@
 				!!binding.shortcut.ctrl === !!shortcut.ctrl &&
 				!!binding.shortcut.shift === !!shortcut.shift);
 
-		if(keyBinding){
+		if (keyBinding) {
 			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
 			chrome.windows.getCurrent(currentWindow => {
-				if(currentWindow.focused){
+				if (currentWindow.focused) {
 					keyBinding.handler();
 				}
 			});
@@ -171,12 +190,12 @@
  * Otherwise, switching foreground windows will not update the active URL.
  * This fixes the annoyance where you launch KeePass after navigating to a login page and it doesn't get the active URL.
  */
-(function(){
+(function() {
 	const webAutoTypeExtensionId = "bpikannkbkpbglmojcajbepbemdlpdhc";
 	const message = { windowActivated: true };
 
 	vivaldi.windowPrivate.onActivated.addListener((windowId, isWindowActive) => {
-		if(isWindowActive){
+		if (isWindowActive) {
 			chrome.runtime.sendMessage(webAutoTypeExtensionId, message);
 		}
 	});
@@ -185,15 +204,15 @@
 /**
  * Let custom.css know the OS major version so it can deal with the -1px top margin in Windows 11 unmaximized windows.
  */
-(function(){
+(function() {
 	navigator.userAgentData.getHighEntropyValues(["platformVersion"])
 		.then(userAgentData => {
 			let classToAdd = null;
-			if(navigator.userAgentData.platform === "Windows"){
+			if (navigator.userAgentData.platform === "Windows") {
 				const platformMajorVersion = parseInt(userAgentData.platformVersion.split(".")[0], 10);
-				if(platformMajorVersion >= 13){
+				if (platformMajorVersion >= 13) {
 					classToAdd = "win11";
-				} else if(platformMajorVersion > 0){
+				} else if (platformMajorVersion > 0) {
 					classToAdd = "win10";
 				} else {
 					classToAdd = "win8OrEarlier";
