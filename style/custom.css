@@ -264,12 +264,16 @@ body.win11 #browser.normal.tabs-top #header {
 	filter: none;
 }
 
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar {
+	border-left: 2px solid transparent;
+	padding-left: 2px;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar.active {
+	border-left-color: var(--colorHighlightBg);
+}
+
 /* Only use thindicators to show active panel tab, not background color */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .addwebpanel-wrapper > button.active,
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > .button-toolbar.active,
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > * > .button-toolbar.active,
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch > button.active {
-	background-color: transparent;
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar.active button {
 	color: var(--colorHighlightBg);
 }
 
@@ -288,23 +292,20 @@ body.win11 #browser.normal.tabs-top #header {
 }
 
 /* Button hover */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover:not(:disabled) {
+#app #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover:not(:disabled) {
 	background-color: var(--colorHighlightBg) !important;
 	background-image: none;
 	color: var(--colorFg);
 	fill: var(--colorFg);
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover:not(:disabled) .button-toolbar-menu-indicator:hover {
+	background-color: var(--colorBgAlphaHeavier);
 }
 
 /* Button hover: white icon on yellow button background drop shadow for increased contrast */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .button-toolbar button:hover :is(svg, .button-title) {
 	/* If you update this style, be sure to update the embedded SVG image for the Google Messages icon below as well */
 	filter: drop-shadow(0 0 2px hsl(0deg 0% 0% / 58%));
-}
-
-/* Panel button hover */
-#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar:not(.toolbar-spacer, .toolbar-spacer-flexible, .toolbar-divider) > button:hover {
-	margin-left: 3px;
-	padding-left: 3px;;
 }
 
 /* Window panel selected row background color */
@@ -344,7 +345,7 @@ body.win11 #browser.normal.tabs-top #header {
 
 /* Default mail flag color (even though semantically it's supposed to be red) */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f .flag-color.flag-red svg {
-	fill: #ffaa00 !important;
+	fill: var(--colorHighlightBg) !important;
 }
 
 /*
