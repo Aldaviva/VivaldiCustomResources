@@ -51,24 +51,7 @@
 
 			const clipboardData = event.clipboardData.getData("text/plain");
 			if (clipboardData.length) {
-				// https://developer.chrome.com/docs/extensions/reference/api/tabs#method-create
-				const newTabOptions = { url: clipboardData };
-
-				// in Vivaldi 8.0, tabs.create no longer automatically respects Vivaldi's New Tab Position setting (vivaldi.tabs.new_placement)
-				vivaldi.prefs.get("vivaldi.tabs.new_placement", newTabPlacementPreference => {
-					if (newTabPlacementPreference.value === "directrightofcurrent") {
-						chrome.tabs.query({ currentWindow: true, active: true }, activeTabs => {
-							const activeTab = activeTabs[0];
-							if (activeTab) {
-								newTabOptions.index = activeTab.index + 1;
-								newTabOptions.windowId = activeTab.windowId;
-							}
-							chrome.tabs.create(newTabOptions);
-						});
-					} else {
-						chrome.tabs.create(newTabOptions);
-					}
-				});
+				chrome.tabs.create({ url: clipboardData });
 			}
 
 			document.removeEventListener("paste", onPaste);
