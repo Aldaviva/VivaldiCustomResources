@@ -265,11 +265,10 @@ body.win11 #browser.normal.tabs-top #header {
 }
 
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar {
-	border-left: 2px solid transparent;
-	padding-left: 2px;
+	padding-left: 4px;
 }
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar.active {
-	border-left-color: var(--colorHighlightBg);
+	background-color: transparent;
 }
 
 /* Only use thindicators to show active panel tab, not background color */
