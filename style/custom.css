@@ -264,11 +264,15 @@ body.win11 #browser.normal.tabs-top #header {
 	filter: none;
 }
 
+/* Panel buttons */
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar {
 	padding-left: 4px;
 }
 #browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar.active {
 	background-color: transparent;
+}
+#browser.theme-id-4be75c70-9226-49b8-8410-eb67529ab81f #switch .button-toolbar .progress {
+	margin-left: 2px;
 }
 
 /* Only use thindicators to show active panel tab, not background color */
