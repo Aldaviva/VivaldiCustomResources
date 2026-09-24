@@ -7,6 +7,7 @@
  *  -  Alt+H: Hibernate background tabs
  *  -  Alt+Z: Open History Back menu, as if you right-clicked the Back button
  *  -  Alt+X: Open History Forward menu, as if you right-clicked the Forward button
+ *  -  [Alt+]O, [Alt+]A, and [Alt+]S: Accelerator keys in the Download File dialog box to easily Open, Save As, or Save the file
  *
  * Vivaldi developer tools: vivaldi.exe --debug-packed-apps, or go to start page and Quick Command: Toggle Developer Tools (Ctrl+Shift+I), or vivaldi://inspect/#apps
  */
@@ -21,6 +22,9 @@
 	 	{ shortcut: { key: "H", alt: true }, handler: hibernateBackgroundTabs },
 	 	{ shortcut: { key: "Z", alt: true }, handler: () => openHistoryMenu("back") },
 	 	{ shortcut: { key: "X", alt: true }, handler: () => openHistoryMenu("forward") },
+		{ shortcut: { key: "O", alt: "either" }, handler: () => accelerateDownloadDialogButton("open") },
+		{ shortcut: { key: "S", alt: "either" }, handler: () => accelerateDownloadDialogButton("save") },
+		{ shortcut: { key: "A", alt: "either" }, handler: () => accelerateDownloadDialogButton("saveAs") },
 	];
 
 	function copyCurrentPageUrl() {
@@ -99,7 +103,7 @@
 
 	function openHistoryMenu(direction) {
 		let navigationAriaLabel;
-		switch(direction){
+		switch (direction) {
 			case "back":
 				navigationAriaLabel = "Previous Page";
 				break;
@@ -113,14 +117,20 @@
 		if (navigationButtonEl) {
 			const rightClickEvent = new MouseEvent("contextmenu", {
 				bubbles: true,
-				clientX: window.innerWidth/2,
-				clientY: window.innerHeight/2
+				clientX: window.innerWidth / 2,
+				clientY: window.innerHeight / 2
 			});
 
 			navigationButtonEl.dispatchEvent(rightClickEvent);
 		} else {
-			console.error("Could not find the "+direction+" button in the navigation toolbar. This can happen if you removed it using Customize › Remove From Toolbar. In this case, you can restore it using Customize › Reset Toolbar To Default, and the button will still be hidden by custom.css.");
+			console.error("Could not find the "+direction+" button in the navigation toolbar. This can happen if you removed it using Customize \u203a Remove From Toolbar. In this case, you can restore it using Customize \u203a Reset Toolbar To Default, and the button will still be hidden by custom.css.");
 		}
+	}
+
+	function accelerateDownloadDialogButton(action) {
+		const button = document.querySelector(".dialog-download .modal-wrapper footer input[type=button][data-action='" + action + "']");
+		button?.click();
+		return !button; // false = handled, true = continue propagating key event
 	}
 
 	vivaldi.tabsPrivate.onKeyboardShortcut.addListener((_, shortcutString) => {
@@ -151,19 +161,14 @@
 		}
 		
 		const keyBinding = keyBindings.find(binding => binding.shortcut.key.toLowerCase() === shortcut.key.toLowerCase() &&
-				!!binding.shortcut.alt === !!shortcut.alt &&
-				!!binding.shortcut.ctrl === !!shortcut.ctrl &&
-				!!binding.shortcut.shift === !!shortcut.shift);
+				(!!binding.shortcut.alt === !!shortcut.alt || binding.shortcut.alt === "either") &&
+				(!!binding.shortcut.ctrl === !!shortcut.ctrl || binding.shortcut.ctrl === "either") &&
+				(!!binding.shortcut.shift === !!shortcut.shift || binding.shortcut.shift === "either"));
 
-		if (keyBinding) {
-			// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
-			chrome.windows.getCurrent(currentWindow => {
-				if (currentWindow.focused) {
-					keyBinding.handler();
-				}
-			});
-
-			return false;
+		// Only run the command if this window is the most recently focused window. Otherwise, you can see the history menu for the wrong window, or copy the wrong URL.
+		if (keyBinding && document.getElementById("browser").classList.contains("hasfocus")) {
+			const continuePropagatingKeyboardEvent = keyBinding.handler();
+			return continuePropagatingKeyboardEvent !== undefined ? continuePropagatingKeyboardEvent : false;
 		}
 	});
 })();
