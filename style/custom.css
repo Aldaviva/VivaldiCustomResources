@@ -72,6 +72,11 @@
 	fill: var(--colorFgFadedMore);
 }
 
+/* Hide "Not Secure" text next to ℹ️ icon in address bar for unencrypted connections, because it makes the URL shift horizontally during loading as the TLS connection is being established, which is distracting and annoying and makes the URL hard to read or click if you're trying to copy or change it, and you can already tell it's not HTTPS because the icon is not a padlock so this text is redundant */
+.UrlBar-AddressField .SiteInfoButton.warning button[aria-label = "Connection Not Secure"] .button-badge {
+	display: none;
+}
+
 /* Reduce rounded corners of progress bar peeking through */
 .UrlBar-AddressField .pageload .pageload-indicator::-webkit-progress-value {
 	border-radius: 0 !important;
