@@ -103,8 +103,8 @@
 .tab-position {
 	height: 28px;
 }
-.tabs-top.tabs-at-edge .tab-position:not(.is-substack) .tab.active,
-.tabs-top:not(.density-on) .tab-position:not(.is-substack) .tab.active {
+.tabs-top.tabs-at-edge:not(.unified-ui) .tab-position:not(.is-substack) .tab.active,
+.tabs-top:not(.density-on, .unified-ui) .tab-position:not(.is-substack) .tab.active:not(.tab-accordion, .tab-in-accordion) {
 	height: unset;
 }
 
